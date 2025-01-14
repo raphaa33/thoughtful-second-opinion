@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { TopicSelect } from "@/components/TopicSelect";
 import { QuestionInput } from "@/components/QuestionInput";
 import { OpinionDisplay } from "@/components/OpinionDisplay";
-import { HistoryList } from "@/components/HistoryList";
 import { FileUpload } from "@/components/FileUpload";
 import { useToast } from "@/components/ui/use-toast";
 import { StepIndicator } from "@/components/StepIndicator";
@@ -11,21 +10,12 @@ import { ResponseCustomization } from "@/components/ResponseCustomization";
 import { RequestSummary } from "@/components/RequestSummary";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-interface HistoryItem {
-  id: string;
-  topic: string;
-  question: string;
-  opinion: string;
-  timestamp: Date;
-}
-
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [topic, setTopic] = useState("");
   const [question, setQuestion] = useState("");
   const [opinion, setOpinion] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [tone, setTone] = useState("Sincere");
   const [adviceStyle, setAdviceStyle] = useState("ai");
@@ -74,16 +64,6 @@ const Index = () => {
       const newOpinion = `Here's a thoughtful ${tone.toLowerCase()} opinion from a ${adviceStyle} perspective about ${topic.toLowerCase()}: ${question}`;
       
       setOpinion(newOpinion);
-      setHistory((prev) => [
-        {
-          id: Date.now().toString(),
-          topic,
-          question,
-          opinion: newOpinion,
-          timestamp: new Date(),
-        },
-        ...prev,
-      ]);
       setCurrentStep(4);
 
       toast({
@@ -178,35 +158,29 @@ const Index = () => {
 
       <StepIndicator currentStep={currentStep} totalSteps={4} />
 
-      <div className="grid gap-8 md:grid-cols-[2fr,1fr] max-w-6xl mx-auto">
-        <div className="space-y-6">
-          <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50">
-            {renderStepContent()}
-            <div className="flex justify-between mt-8">
-              {currentStep > 1 && (
-                <Button
-                  onClick={handleBack}
-                  variant="outline"
-                  className="flex items-center gap-2"
-                >
-                  <ArrowLeft className="h-4 w-4" /> Back
-                </Button>
-              )}
-              {currentStep < 4 && (
-                <Button
-                  onClick={currentStep === 3 ? handleSubmit : handleNext}
-                  className="flex items-center gap-2 ml-auto"
-                >
-                  {currentStep === 3 ? "Get Opinion" : "Next"}{" "}
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              )}
-            </div>
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50">
+          {renderStepContent()}
+          <div className="flex justify-between mt-8">
+            {currentStep > 1 && (
+              <Button
+                onClick={handleBack}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" /> Back
+              </Button>
+            )}
+            {currentStep < 4 && (
+              <Button
+                onClick={currentStep === 3 ? handleSubmit : handleNext}
+                className="flex items-center gap-2 ml-auto"
+              >
+                {currentStep === 3 ? "Get Opinion" : "Next"}{" "}
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            )}
           </div>
-        </div>
-
-        <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-border/50">
-          <HistoryList items={history} />
         </div>
       </div>
     </div>

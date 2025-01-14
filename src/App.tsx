@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import Index from "./pages/Index"
+import PreviousOpinions from "./pages/PreviousOpinions"
 
 const queryClient = new QueryClient()
 
@@ -21,6 +22,7 @@ const App = () => (
             <SidebarInset>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/previous-opinions" element={<PreviousOpinions />} />
               </Routes>
             </SidebarInset>
           </div>
