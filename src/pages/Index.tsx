@@ -4,6 +4,7 @@ import { TopicSelect } from "@/components/TopicSelect"
 import { QuestionInput } from "@/components/QuestionInput"
 import { OpinionDisplay } from "@/components/OpinionDisplay"
 import { HistoryList } from "@/components/HistoryList"
+import { FileUpload } from "@/components/FileUpload"
 import { useToast } from "@/components/ui/use-toast"
 
 interface HistoryItem {
@@ -20,6 +21,7 @@ const Index = () => {
   const [opinion, setOpinion] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [history, setHistory] = useState<HistoryItem[]>([])
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const { toast } = useToast()
 
   const handleSubmit = async () => {
@@ -71,6 +73,14 @@ const Index = () => {
     }
   }
 
+  const handleFileSelect = (file: File) => {
+    setSelectedFile(file);
+    toast({
+      title: "File uploaded successfully",
+      description: `${file.name} has been attached to your question`,
+    });
+  };
+
   return (
     <div className="container mx-auto p-8 space-y-8">
       <div className="max-w-3xl mx-auto text-center space-y-4">
@@ -93,6 +103,10 @@ const Index = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Your Question</label>
                 <QuestionInput value={question} onChange={setQuestion} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Attach Files (Optional)</label>
+                <FileUpload onFileSelect={handleFileSelect} />
               </div>
               <Button
                 onClick={handleSubmit}
