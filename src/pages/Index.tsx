@@ -74,21 +74,21 @@ const Index = () => {
   return (
     <div className="p-6 space-y-8">
       <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Second Opinion</h1>
-        <p className="text-xl text-white/80">
+        <h1 className="text-4xl font-bold text-brand-900">Second Opinion</h1>
+        <p className="text-xl text-muted-foreground">
           Get expert insights on any topic
         </p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-[2fr,1fr]">
         <div className="space-y-6">
-          <div className="space-y-4 bg-white/90 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/20">
+          <div className="space-y-4 bg-white p-6 rounded-xl shadow-sm">
             <TopicSelect value={topic} onValueChange={setTopic} />
             <QuestionInput value={question} onChange={setQuestion} />
             <Button
               onClick={handleSubmit}
               disabled={isLoading}
-              className="w-full md:w-auto bg-primary hover:bg-primary/90"
+              className="w-full md:w-auto"
             >
               Get Second Opinion
             </Button>
@@ -96,7 +96,7 @@ const Index = () => {
           <OpinionDisplay opinion={opinion} isLoading={isLoading} />
         </div>
 
-        <div className="bg-white/90 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/20">
+        <div className="bg-white p-6 rounded-xl shadow-sm">
           <HistoryList items={history} />
         </div>
       </div>
