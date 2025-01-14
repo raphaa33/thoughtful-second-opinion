@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { useOpinions } from "@/contexts/OpinionsContext";
+import { useSavedOpinions } from "@/contexts/SavedOpinionsContext";
 import { HistoryList } from "@/components/HistoryList";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
 
 const PreviousOpinions = () => {
   const { opinions } = useOpinions();
+  const { isOpinionSaved, saveOpinion, removeSavedOpinion } = useSavedOpinions();
   const navigate = useNavigate();
 
   if (opinions.length === 0) {
@@ -42,7 +44,12 @@ const PreviousOpinions = () => {
           New Opinion
         </Button>
       </div>
-      <HistoryList items={opinions} />
+      <HistoryList 
+        items={opinions}
+        isOpinionSaved={isOpinionSaved}
+        saveOpinion={saveOpinion}
+        removeSavedOpinion={removeSavedOpinion}
+      />
     </div>
   );
 };
