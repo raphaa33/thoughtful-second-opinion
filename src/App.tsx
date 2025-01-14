@@ -8,6 +8,10 @@ import { AppSidebar } from "@/components/AppSidebar"
 import { OpinionsProvider } from "@/contexts/OpinionsContext"
 import Index from "./pages/Index"
 import PreviousOpinions from "./pages/PreviousOpinions"
+import AskFriend from "./pages/AskFriend"
+import PopularQuestions from "./pages/PopularQuestions"
+import SavedOpinions from "./pages/SavedOpinions"
+import Settings from "./pages/Settings"
 
 const queryClient = new QueryClient()
 
@@ -25,6 +29,10 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/previous-opinions" element={<PreviousOpinions />} />
+                  <Route path="/ask-friend" element={<AskFriend />} />
+                  <Route path="/popular" element={<PopularQuestions />} />
+                  <Route path="/saved" element={<SavedOpinions />} />
+                  <Route path="/settings" element={<Settings />} />
                 </Routes>
               </SidebarInset>
             </div>

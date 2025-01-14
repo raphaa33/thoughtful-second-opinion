@@ -10,6 +10,7 @@ import { ResponseCustomization } from "@/components/ResponseCustomization";
 import { RequestSummary } from "@/components/RequestSummary";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useOpinions } from "@/contexts/OpinionsContext";
+import { generateOpinion } from "@/utils/openai";
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -61,15 +62,12 @@ const Index = () => {
 
     setIsLoading(true);
     try {
-      // Simulate API call - replace with actual API integration
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const newOpinion = `Here's a thoughtful ${tone.toLowerCase()} opinion from a ${adviceStyle} perspective about ${topic.toLowerCase()}: ${question}`;
-      
-      setOpinion(newOpinion);
+      const generatedOpinion = await generateOpinion(question, tone, adviceStyle);
+      setOpinion(generatedOpinion);
       addOpinion({
         topic,
         question,
-        opinion: newOpinion,
+        opinion: generatedOpinion,
       });
       setCurrentStep(4);
 
