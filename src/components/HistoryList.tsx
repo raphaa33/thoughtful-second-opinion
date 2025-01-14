@@ -2,6 +2,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSavedOpinions } from "@/contexts/SavedOpinionsContext";
+import { useToast } from "@/components/ui/use-toast";
 
 interface HistoryItem {
   id: string;
@@ -16,6 +18,23 @@ interface HistoryListProps {
 }
 
 export const HistoryList = ({ items }: HistoryListProps) => {
+  const { saveOpinion, removeSavedOpinion, isOpinionSaved } = useSavedOpinions();
+  const { toast } = useToast();
+
+  const handleSaveOpinion = (item: HistoryItem) => {
+    if (isOpinionSaved(item.id)) {
+      removeSavedOpinion(item.id);
+      toast({
+        description: "Opinion removed from saved items",
+      });
+    } else {
+      saveOpinion(item);
+      toast({
+        description: "Opinion saved successfully",
+      });
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -32,8 +51,8 @@ export const HistoryList = ({ items }: HistoryListProps) => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8"
-                      onClick={() => console.log('Saved opinion:', item.id)}
+                      className={`h-8 w-8 ${isOpinionSaved(item.id) ? "text-primary" : ""}`}
+                      onClick={() => handleSaveOpinion(item)}
                     >
                       <Bookmark className="h-4 w-4" />
                     </Button>
