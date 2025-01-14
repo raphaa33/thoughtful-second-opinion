@@ -1,4 +1,5 @@
 import { MessageSquare, Bookmark, Settings, User, Users, List, History } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
 import {
   Sidebar,
   SidebarContent,
@@ -45,6 +46,8 @@ const menuItems = [
 ]
 
 export function AppSidebar() {
+  const location = useLocation();
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -56,10 +59,13 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     tooltip={item.title}
-                    isActive={item.url === window.location.pathname}
+                    isActive={item.url === location.pathname}
+                    asChild
                   >
-                    <item.icon className="w-4 h-4" />
-                    <span>{item.title}</span>
+                    <Link to={item.url}>
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.title}</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -70,9 +76,11 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Account">
-              <User className="w-4 h-4" />
-              <span>Account</span>
+            <SidebarMenuButton tooltip="Account" asChild>
+              <Link to="/account">
+                <User className="w-4 h-4" />
+                <span>Account</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
