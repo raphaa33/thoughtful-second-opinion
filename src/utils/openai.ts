@@ -8,10 +8,10 @@ const generateOpinion = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4",
+        model: "gpt-4o",
         messages: [
           {
             role: "system",
@@ -26,6 +26,12 @@ const generateOpinion = async (
         temperature: 0.7,
       }),
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("OpenAI API Error:", errorData);
+      throw new Error(errorData.error?.message || "Failed to generate opinion");
+    }
 
     const data = await response.json();
     return data.choices[0].message.content;
