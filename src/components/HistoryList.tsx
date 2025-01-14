@@ -27,7 +27,7 @@ export const HistoryList = ({ items }: HistoryListProps) => {
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-sm font-medium text-brand-600">{item.topic}</span>
                   <span className="text-xs text-muted-foreground">
-                    {item.timestamp.toLocaleDateString()}
+                    {new Date(item.timestamp).toLocaleDateString()}
                   </span>
                 </div>
                 <p className="text-sm font-medium mb-2">{item.question}</p>

@@ -19,9 +19,10 @@ export function OpinionsProvider({ children }: { children: React.ReactNode }) {
   const [opinions, setOpinions] = useState<Opinion[]>(() => {
     const saved = localStorage.getItem("opinions");
     if (saved) {
-      return JSON.parse(saved).map((opinion: any) => ({
+      const parsedOpinions = JSON.parse(saved);
+      return parsedOpinions.map((opinion: any) => ({
         ...opinion,
-        timestamp: new Date(opinion.timestamp),
+        timestamp: new Date(opinion.timestamp)
       }));
     }
     return [];
