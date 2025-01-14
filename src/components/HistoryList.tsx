@@ -1,21 +1,34 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bookmark } from "lucide-react";
+import { Bookmark, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface HistoryItem {
-  id: string;
-  topic: string;
-  question: string;
-  opinion: string;
-  timestamp: Date;
-}
+import { Opinion } from "@/contexts/OpinionsContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface HistoryListProps {
-  items: HistoryItem[];
+  items: Opinion[];
+  isOpinionSaved: (id: string) => boolean;
+  saveOpinion: (opinion: Opinion) => void;
+  removeSavedOpinion: (id: string) => void;
 }
 
-export const HistoryList = ({ items }: HistoryListProps) => {
+export const HistoryList = ({ items, isOpinionSaved, saveOpinion, removeSavedOpinion }: HistoryListProps) => {
+  const { toast } = useToast();
+
+  const handleSaveToggle = (opinion: Opinion) => {
+    if (isOpinionSaved(opinion.id)) {
+      removeSavedOpinion(opinion.id);
+      toast({
+        description: "Opinion removed from saved list",
+      });
+    } else {
+      saveOpinion(opinion);
+      toast({
+        description: "Opinion saved successfully",
+      });
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -33,9 +46,13 @@ export const HistoryList = ({ items }: HistoryListProps) => {
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8"
-                      onClick={() => console.log('Saved opinion:', item.id)}
+                      onClick={() => handleSaveToggle(item)}
                     >
-                      <Bookmark className="h-4 w-4" />
+                      {isOpinionSaved(item.id) ? (
+                        <BookmarkCheck className="h-4 w-4" />
+                      ) : (
+                        <Bookmark className="h-4 w-4" />
+                      )}
                     </Button>
                   </div>
                   <span className="text-xs text-muted-foreground">
