@@ -42,7 +42,7 @@ const PreviousOpinions = () => {
           New Opinion
         </Button>
       </div>
-      <HistoryList opinions={opinions} />
+      <HistoryList items={opinions} />
     </div>
   );
 };
