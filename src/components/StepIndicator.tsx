@@ -46,7 +46,7 @@ export const StepIndicator = ({ currentStep, totalSteps }: StepIndicatorProps) =
               <div 
                 className={`absolute top-0 left-0 h-full bg-primary/20 transition-all duration-300 ease-in-out`}
                 style={{
-                  width: i + 1 < currentStep ? '100%' : '0%'
+                  width: currentStep > 1 && i === 0 ? '100%' : i + 1 < currentStep ? '100%' : '0%'
                 }}
               />
             </div>
