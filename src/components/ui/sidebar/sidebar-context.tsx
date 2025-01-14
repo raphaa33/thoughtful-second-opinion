@@ -1,4 +1,7 @@
 import * as React from "react"
+import { cn } from "@/lib/utils"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { useMediaQuery } from "@/hooks/use-media-query"
 
 type SidebarContext = {
   state: "expanded" | "collapsed"
@@ -15,7 +18,7 @@ const SidebarContext = React.createContext<SidebarContext | null>(null)
 export function useSidebar() {
   const context = React.useContext(SidebarContext)
   if (!context) {
-    throw new Error("useSidebar must be used within a SidebarProvider.")
+    throw new Error("useSidebar must be used within a SidebarProvider")
   }
   return context
 }
@@ -44,7 +47,7 @@ export const SidebarProvider = React.forwardRef<
     },
     ref
   ) => {
-    const isMobile = useIsMobile()
+    const isMobile = useMediaQuery("(max-width: 768px)")
     const [openMobile, setOpenMobile] = React.useState(false)
     const [_open, _setOpen] = React.useState(defaultOpen)
     const open = openProp ?? _open
