@@ -1,53 +1,79 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { TopicSelect } from "@/components/TopicSelect"
-import { QuestionInput } from "@/components/QuestionInput"
-import { OpinionDisplay } from "@/components/OpinionDisplay"
-import { HistoryList } from "@/components/HistoryList"
-import { FileUpload } from "@/components/FileUpload"
-import { useToast } from "@/components/ui/use-toast"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { TopicSelect } from "@/components/TopicSelect";
+import { QuestionInput } from "@/components/QuestionInput";
+import { OpinionDisplay } from "@/components/OpinionDisplay";
+import { HistoryList } from "@/components/HistoryList";
+import { FileUpload } from "@/components/FileUpload";
+import { useToast } from "@/components/ui/use-toast";
+import { StepIndicator } from "@/components/StepIndicator";
+import { ResponseCustomization } from "@/components/ResponseCustomization";
+import { RequestSummary } from "@/components/RequestSummary";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface HistoryItem {
-  id: string
-  topic: string
-  question: string
-  opinion: string
-  timestamp: Date
+  id: string;
+  topic: string;
+  question: string;
+  opinion: string;
+  timestamp: Date;
 }
 
 const Index = () => {
-  const [topic, setTopic] = useState("")
-  const [question, setQuestion] = useState("")
-  const [opinion, setOpinion] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [history, setHistory] = useState<HistoryItem[]>([])
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const { toast } = useToast()
+  const [currentStep, setCurrentStep] = useState(1);
+  const [topic, setTopic] = useState("");
+  const [question, setQuestion] = useState("");
+  const [opinion, setOpinion] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [tone, setTone] = useState("Sincere");
+  const [adviceStyle, setAdviceStyle] = useState("ai");
+  const { toast } = useToast();
+
+  const handleNext = () => {
+    if (currentStep === 1 && !question.trim()) {
+      toast({
+        title: "Please enter your question",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (currentStep < 4) {
+      setCurrentStep((prev) => prev + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep((prev) => prev - 1);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!topic) {
       toast({
         title: "Please select a topic",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
     if (!question.trim()) {
       toast({
         title: "Please enter your question",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       // Simulate API call - replace with actual API integration
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const newOpinion = `Here's a thoughtful second opinion about ${topic.toLowerCase()}: ${question}`
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const newOpinion = `Here's a thoughtful ${tone.toLowerCase()} opinion from a ${adviceStyle} perspective about ${topic.toLowerCase()}: ${question}`;
       
-      setOpinion(newOpinion)
+      setOpinion(newOpinion);
       setHistory((prev) => [
         {
           id: Date.now().toString(),
@@ -57,21 +83,22 @@ const Index = () => {
           timestamp: new Date(),
         },
         ...prev,
-      ])
+      ]);
+      setCurrentStep(4);
 
       toast({
         title: "Opinion generated successfully",
-      })
+      });
     } catch (error) {
       toast({
         title: "Failed to generate opinion",
         description: "Please try again later",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleFileSelect = (file: File) => {
     setSelectedFile(file);
@@ -81,43 +108,101 @@ const Index = () => {
     });
   };
 
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Topic</label>
+              <TopicSelect value={topic} onValueChange={setTopic} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Your Question</label>
+              <QuestionInput value={question} onChange={setQuestion} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Attach Files (Optional)
+              </label>
+              <FileUpload onFileSelect={handleFileSelect} />
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <ResponseCustomization
+            tone={tone}
+            onToneChange={setTone}
+            adviceStyle={adviceStyle}
+            onAdviceStyleChange={setAdviceStyle}
+          />
+        );
+      case 3:
+        return (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-center">Review and Confirm!</h2>
+            <RequestSummary
+              question={question}
+              tone={tone}
+              adviceStyle={adviceStyle}
+              selectedFile={selectedFile}
+            />
+          </div>
+        );
+      case 4:
+        return <OpinionDisplay opinion={opinion} isLoading={isLoading} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="container mx-auto p-8 space-y-8">
       <div className="max-w-3xl mx-auto text-center space-y-4">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
-          You are one opinion away
+          {currentStep === 1
+            ? "Your trusted second opinion starts here!"
+            : currentStep === 4
+            ? "Here's What You Needed to Hear!"
+            : "Customize Your Second Opinion"}
         </h1>
         <p className="text-xl text-muted-foreground">
-          Let us know what you want to get advice on
+          {currentStep === 1
+            ? "Let us know what you want to get advice on"
+            : currentStep === 4
+            ? "We hope this helps with your decision"
+            : "Tell us how you'd like to receive your advice"}
         </p>
       </div>
+
+      <StepIndicator currentStep={currentStep} totalSteps={4} />
 
       <div className="grid gap-8 md:grid-cols-[2fr,1fr] max-w-6xl mx-auto">
         <div className="space-y-6">
           <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50">
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Topic</label>
-                <TopicSelect value={topic} onValueChange={setTopic} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Your Question</label>
-                <QuestionInput value={question} onChange={setQuestion} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Attach Files (Optional)</label>
-                <FileUpload onFileSelect={handleFileSelect} />
-              </div>
-              <Button
-                onClick={handleSubmit}
-                disabled={isLoading}
-                className="w-full md:w-auto bg-primary hover:bg-primary/90 text-white"
-              >
-                Get Second Opinion
-              </Button>
+            {renderStepContent()}
+            <div className="flex justify-between mt-8">
+              {currentStep > 1 && (
+                <Button
+                  onClick={handleBack}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <ArrowLeft className="h-4 w-4" /> Back
+                </Button>
+              )}
+              {currentStep < 4 && (
+                <Button
+                  onClick={currentStep === 3 ? handleSubmit : handleNext}
+                  className="flex items-center gap-2 ml-auto"
+                >
+                  {currentStep === 3 ? "Get Opinion" : "Next"}{" "}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              )}
             </div>
           </div>
-          <OpinionDisplay opinion={opinion} isLoading={isLoading} />
         </div>
 
         <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-border/50">
@@ -125,7 +210,7 @@ const Index = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;
