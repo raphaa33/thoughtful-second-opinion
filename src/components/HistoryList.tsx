@@ -1,9 +1,8 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bookmark } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useSavedOpinions } from "@/contexts/SavedOpinionsContext";
+import { Bookmark } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { formatDistanceToNow } from "date-fns";
 
 interface HistoryItem {
   id: string;
@@ -15,72 +14,73 @@ interface HistoryItem {
 
 interface HistoryListProps {
   items: HistoryItem[];
+  isOpinionSaved: (id: string) => boolean;
+  saveOpinion: (opinion: HistoryItem) => void;
+  removeSavedOpinion: (id: string) => void;
 }
 
-export const HistoryList = ({ items }: HistoryListProps) => {
-  const { saveOpinion, removeSavedOpinion, isOpinionSaved } = useSavedOpinions();
+export const HistoryList = ({
+  items,
+  isOpinionSaved,
+  saveOpinion,
+  removeSavedOpinion,
+}: HistoryListProps) => {
   const { toast } = useToast();
 
   const handleSaveOpinion = (item: HistoryItem) => {
-    try {
-      if (isOpinionSaved(item.id)) {
-        removeSavedOpinion(item.id);
-        toast({
-          description: "Opinion removed from saved items",
-          variant: "default",
-        });
-      } else {
-        saveOpinion(item);
-        toast({
-          description: "Opinion saved successfully",
-          variant: "default",
-        });
-      }
-    } catch (error) {
+    if (isOpinionSaved(item.id)) {
+      removeSavedOpinion(item.id);
       toast({
-        title: "Error",
-        description: "Failed to save opinion. Please try again.",
-        variant: "destructive",
+        description: "Opinion removed from saved items",
+      });
+    } else {
+      saveOpinion(item);
+      toast({
+        description: "Opinion saved successfully",
       });
     }
   };
 
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-8 text-muted-foreground">
+        No previous opinions found
+      </div>
+    );
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Previous Opinions</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[300px] pr-4">
-          <div className="space-y-4">
-            {items.map((item) => (
-              <div key={item.id} className="border-b pb-4 last:border-b-0">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-brand-600">{item.topic}</span>
-                    <Button
-                      variant={isOpinionSaved(item.id) ? "default" : "ghost"}
-                      size="icon"
-                      onClick={() => handleSaveOpinion(item)}
-                      className="h-8 w-8"
-                      title={isOpinionSaved(item.id) ? "Remove from saved" : "Save opinion"}
-                    >
-                      <Bookmark 
-                        className={`h-4 w-4 ${isOpinionSaved(item.id) ? "fill-current" : ""}`}
-                      />
-                    </Button>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    {new Date(item.timestamp).toLocaleDateString()}
-                  </span>
+    <div className="space-y-4">
+      {items.map((item) => (
+        <Card key={item.id}>
+          <CardHeader>
+            <div className="flex justify-between items-start">
+              <div className="space-y-1">
+                <h3 className="text-lg font-semibold leading-none tracking-tight">
+                  {item.question}
+                </h3>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-brand-600">{item.topic}</span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={`h-8 w-8 ${isOpinionSaved(item.id) ? "text-primary" : ""}`}
+                    onClick={() => handleSaveOpinion(item)}
+                  >
+                    <Bookmark className="h-4 w-4" />
+                  </Button>
                 </div>
-                <p className="text-sm font-medium mb-2">{item.question}</p>
-                <p className="text-sm text-muted-foreground">{item.opinion}</p>
+                <span className="text-xs text-muted-foreground">
+                  {formatDistanceToNow(new Date(item.timestamp), { addSuffix: true })}
+                </span>
               </div>
-            ))}
-          </div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">{item.opinion}</p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
   );
 };
