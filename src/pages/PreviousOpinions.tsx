@@ -1,23 +1,8 @@
 import { HistoryList } from "@/components/HistoryList";
+import { useOpinions } from "@/contexts/OpinionsContext";
 
 const PreviousOpinions = () => {
-  // This is where we'll fetch the history items from an API or local storage
-  const historyItems = [
-    {
-      id: "1",
-      topic: "Career",
-      question: "Should I accept the job offer?",
-      opinion: "Based on the information provided, this opportunity aligns well with your career goals...",
-      timestamp: new Date(2024, 2, 15),
-    },
-    {
-      id: "2",
-      topic: "Relationships",
-      question: "How do I improve communication with my partner?",
-      opinion: "Open and honest communication is key to any healthy relationship...",
-      timestamp: new Date(2024, 2, 14),
-    },
-  ];
+  const { opinions } = useOpinions();
 
   return (
     <div className="container mx-auto p-8">
@@ -29,7 +14,7 @@ const PreviousOpinions = () => {
           </p>
         </div>
         <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50">
-          <HistoryList items={historyItems} />
+          <HistoryList items={opinions} />
         </div>
       </div>
     </div>

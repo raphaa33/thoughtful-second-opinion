@@ -9,6 +9,7 @@ import { StepIndicator } from "@/components/StepIndicator";
 import { ResponseCustomization } from "@/components/ResponseCustomization";
 import { RequestSummary } from "@/components/RequestSummary";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useOpinions } from "@/contexts/OpinionsContext";
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -20,6 +21,7 @@ const Index = () => {
   const [tone, setTone] = useState("Sincere");
   const [adviceStyle, setAdviceStyle] = useState("ai");
   const { toast } = useToast();
+  const { addOpinion } = useOpinions();
 
   const handleNext = () => {
     if (currentStep === 1 && !question.trim()) {
@@ -64,6 +66,11 @@ const Index = () => {
       const newOpinion = `Here's a thoughtful ${tone.toLowerCase()} opinion from a ${adviceStyle} perspective about ${topic.toLowerCase()}: ${question}`;
       
       setOpinion(newOpinion);
+      addOpinion({
+        topic,
+        question,
+        opinion: newOpinion,
+      });
       setCurrentStep(4);
 
       toast({
