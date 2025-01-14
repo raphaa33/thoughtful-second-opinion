@@ -9,6 +9,18 @@ const topics = [
   "Education",
   "Relationships",
   "Home & Living",
+  "Mental Health",
+  "Parenting",
+  "Personal Development",
+  "Business",
+  "Travel",
+  "Fitness & Wellness",
+  "Arts & Culture",
+  "Environment & Sustainability",
+  "Social Issues",
+  "Entertainment",
+  "Sports & Recreation",
+  "Food & Nutrition",
 ];
 
 interface TopicSelectProps {
