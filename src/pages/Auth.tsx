@@ -16,6 +16,9 @@ const Auth = () => {
         if (event === "SIGNED_IN" && session) {
           navigate("/");
         }
+        if (event === "SIGNED_OUT") {
+          setErrorMessage(""); // Clear errors on sign out
+        }
       }
     );
 
