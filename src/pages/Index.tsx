@@ -139,19 +139,21 @@ const Index = () => {
 
   return (
     <div className="container mx-auto p-8 space-y-8">
-      <div className="max-w-3xl mx-auto text-center space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary/90 via-primary to-primary/90 bg-clip-text text-transparent drop-shadow-sm tracking-tight">
-            Your trusted second opinion starts here!
-          </h1>
-          <p className="text-xl text-muted-foreground font-medium">
-            {currentStep === 1
-              ? "Let us know what you want to get advice on"
-              : currentStep === 4
-              ? "We hope this helps with your decision"
-              : "Tell us how you'd like to receive your advice"}
-          </p>
-        </div>
+      <div className="max-w-3xl mx-auto text-center space-y-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+          {currentStep === 1
+            ? "Your trusted second opinion starts here!"
+            : currentStep === 4
+            ? "Here's What You Needed to Hear!"
+            : "Customize Your Second Opinion"}
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          {currentStep === 1
+            ? "Let us know what you want to get advice on"
+            : currentStep === 4
+            ? "We hope this helps with your decision"
+            : "Tell us how you'd like to receive your advice"}
+        </p>
       </div>
 
       <StepIndicator currentStep={currentStep} totalSteps={4} />
