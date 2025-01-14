@@ -72,31 +72,41 @@ const Index = () => {
   }
 
   return (
-    <div className="p-6 space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-brand-900">Second Opinion</h1>
+    <div className="container mx-auto p-8 space-y-8">
+      <div className="max-w-3xl mx-auto text-center space-y-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+          You are one opinion away
+        </h1>
         <p className="text-xl text-muted-foreground">
-          Get expert insights on any topic
+          Let us know what you want to get advice on
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-[2fr,1fr]">
+      <div className="grid gap-8 md:grid-cols-[2fr,1fr] max-w-6xl mx-auto">
         <div className="space-y-6">
-          <div className="space-y-4 bg-white p-6 rounded-xl shadow-sm">
-            <TopicSelect value={topic} onValueChange={setTopic} />
-            <QuestionInput value={question} onChange={setQuestion} />
-            <Button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="w-full md:w-auto"
-            >
-              Get Second Opinion
-            </Button>
+          <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50">
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Topic</label>
+                <TopicSelect value={topic} onValueChange={setTopic} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Your Question</label>
+                <QuestionInput value={question} onChange={setQuestion} />
+              </div>
+              <Button
+                onClick={handleSubmit}
+                disabled={isLoading}
+                className="w-full md:w-auto bg-primary hover:bg-primary/90 text-white"
+              >
+                Get Second Opinion
+              </Button>
+            </div>
           </div>
           <OpinionDisplay opinion={opinion} isLoading={isLoading} />
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm">
+        <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-border/50">
           <HistoryList items={history} />
         </div>
       </div>
