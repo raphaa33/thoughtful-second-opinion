@@ -22,15 +22,25 @@ export const HistoryList = ({ items }: HistoryListProps) => {
   const { toast } = useToast();
 
   const handleSaveOpinion = (item: HistoryItem) => {
-    if (isOpinionSaved(item.id)) {
-      removeSavedOpinion(item.id);
+    try {
+      if (isOpinionSaved(item.id)) {
+        removeSavedOpinion(item.id);
+        toast({
+          description: "Opinion removed from saved items",
+          variant: "default",
+        });
+      } else {
+        saveOpinion(item);
+        toast({
+          description: "Opinion saved successfully",
+          variant: "default",
+        });
+      }
+    } catch (error) {
       toast({
-        description: "Opinion removed from saved items",
-      });
-    } else {
-      saveOpinion(item);
-      toast({
-        description: "Opinion saved successfully",
+        title: "Error",
+        description: "Failed to save opinion. Please try again.",
+        variant: "destructive",
       });
     }
   };
@@ -49,12 +59,15 @@ export const HistoryList = ({ items }: HistoryListProps) => {
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-brand-600">{item.topic}</span>
                     <Button
-                      variant="ghost"
+                      variant={isOpinionSaved(item.id) ? "default" : "ghost"}
                       size="icon"
-                      className={`h-8 w-8 ${isOpinionSaved(item.id) ? "text-primary" : ""}`}
                       onClick={() => handleSaveOpinion(item)}
+                      className="h-8 w-8"
+                      title={isOpinionSaved(item.id) ? "Remove from saved" : "Save opinion"}
                     >
-                      <Bookmark className="h-4 w-4" />
+                      <Bookmark 
+                        className={`h-4 w-4 ${isOpinionSaved(item.id) ? "fill-current" : ""}`}
+                      />
                     </Button>
                   </div>
                   <span className="text-xs text-muted-foreground">
