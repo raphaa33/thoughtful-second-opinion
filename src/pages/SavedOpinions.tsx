@@ -3,7 +3,7 @@ import { HistoryList } from "@/components/HistoryList";
 import { useSavedOpinions } from "@/contexts/SavedOpinionsContext";
 
 const SavedOpinions = () => {
-  const { savedOpinions } = useSavedOpinions();
+  const { savedOpinions, isOpinionSaved, saveOpinion, removeSavedOpinion } = useSavedOpinions();
 
   if (savedOpinions.length === 0) {
     return (
@@ -24,7 +24,12 @@ const SavedOpinions = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <HistoryList items={savedOpinions} />
+      <HistoryList 
+        items={savedOpinions}
+        isOpinionSaved={isOpinionSaved}
+        saveOpinion={saveOpinion}
+        removeSavedOpinion={removeSavedOpinion}
+      />
     </div>
   );
 };
