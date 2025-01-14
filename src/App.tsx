@@ -1,34 +1,46 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AppSidebar } from "@/components/AppSidebar";
-import { OpinionsProvider } from "@/contexts/OpinionsContext";
-import PreviousOpinions from "@/pages/PreviousOpinions";
-import SavedOpinions from "@/pages/SavedOpinions";
-import Home from "@/pages/Home";
-import { SavedOpinionsProvider } from "./contexts/SavedOpinionsContext";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster"
+import { Toaster as Sonner } from "@/components/ui/sonner"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/AppSidebar"
+import { OpinionsProvider } from "@/contexts/OpinionsContext"
+import Index from "./pages/Index"
+import PreviousOpinions from "./pages/PreviousOpinions"
+import AskFriend from "./pages/AskFriend"
+import PopularQuestions from "./pages/PopularQuestions"
+import SavedOpinions from "./pages/SavedOpinions"
+import Settings from "./pages/Settings"
 
-function App() {
-  return (
-    <SavedOpinionsProvider>
+const queryClient = new QueryClient()
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
       <OpinionsProvider>
-        <SidebarProvider>
-          <div className="flex min-h-screen w-full">
-            <Router>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <SidebarProvider>
+            <div className="flex min-h-screen w-full bg-gray-50">
               <AppSidebar />
-              <main className="flex-1">
+              <SidebarInset>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Index />} />
                   <Route path="/previous-opinions" element={<PreviousOpinions />} />
+                  <Route path="/ask-friend" element={<AskFriend />} />
+                  <Route path="/popular" element={<PopularQuestions />} />
                   <Route path="/saved" element={<SavedOpinions />} />
+                  <Route path="/settings" element={<Settings />} />
                 </Routes>
-              </main>
-            </Router>
-          </div>
-        </SidebarProvider>
+              </SidebarInset>
+            </div>
+          </SidebarProvider>
+        </BrowserRouter>
       </OpinionsProvider>
-    </SavedOpinionsProvider>
-  );
-}
+    </TooltipProvider>
+  </QueryClientProvider>
+)
 
-export default App;
+export default App

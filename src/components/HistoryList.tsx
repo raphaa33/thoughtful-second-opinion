@@ -1,8 +1,7 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bookmark } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
-import { formatDistanceToNow } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 interface HistoryItem {
   id: string;
@@ -14,73 +13,42 @@ interface HistoryItem {
 
 interface HistoryListProps {
   items: HistoryItem[];
-  isOpinionSaved: (id: string) => boolean;
-  saveOpinion: (opinion: HistoryItem) => void;
-  removeSavedOpinion: (id: string) => void;
 }
 
-export const HistoryList = ({
-  items,
-  isOpinionSaved,
-  saveOpinion,
-  removeSavedOpinion,
-}: HistoryListProps) => {
-  const { toast } = useToast();
-
-  const handleSaveOpinion = (item: HistoryItem) => {
-    if (isOpinionSaved(item.id)) {
-      removeSavedOpinion(item.id);
-      toast({
-        description: "Opinion removed from saved items",
-      });
-    } else {
-      saveOpinion(item);
-      toast({
-        description: "Opinion saved successfully",
-      });
-    }
-  };
-
-  if (items.length === 0) {
-    return (
-      <div className="text-center py-8 text-muted-foreground">
-        No previous opinions found
-      </div>
-    );
-  }
-
+export const HistoryList = ({ items }: HistoryListProps) => {
   return (
-    <div className="space-y-4">
-      {items.map((item) => (
-        <Card key={item.id}>
-          <CardHeader>
-            <div className="flex justify-between items-start">
-              <div className="space-y-1">
-                <h3 className="text-lg font-semibold leading-none tracking-tight">
-                  {item.question}
-                </h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-brand-600">{item.topic}</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={`h-8 w-8 ${isOpinionSaved(item.id) ? "text-primary" : ""}`}
-                    onClick={() => handleSaveOpinion(item)}
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </Button>
+    <Card>
+      <CardHeader>
+        <CardTitle>Previous Opinions</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea className="h-[300px] pr-4">
+          <div className="space-y-4">
+            {items.map((item) => (
+              <div key={item.id} className="border-b pb-4 last:border-b-0">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-brand-600">{item.topic}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => console.log('Saved opinion:', item.id)}
+                    >
+                      <Bookmark className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {new Date(item.timestamp).toLocaleDateString()}
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(item.timestamp), { addSuffix: true })}
-                </span>
+                <p className="text-sm font-medium mb-2">{item.question}</p>
+                <p className="text-sm text-muted-foreground">{item.opinion}</p>
               </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">{item.opinion}</p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+            ))}
+          </div>
+        </ScrollArea>
+      </CardContent>
+    </Card>
   );
 };
