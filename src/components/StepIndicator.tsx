@@ -42,11 +42,14 @@ export const StepIndicator = ({ currentStep, totalSteps }: StepIndicatorProps) =
             </span>
           </div>
           {i < totalSteps - 1 && (
-            <div
-              className={`h-[2px] w-24 mx-4 mt-[-20px] ${
-                i + 1 < currentStep ? "bg-primary/20" : "bg-secondary"
-              }`}
-            />
+            <div className="relative h-[2px] w-24 mx-4 mt-[-20px] bg-secondary">
+              <div 
+                className={`absolute top-0 left-0 h-full bg-primary/20 transition-all duration-300 ease-in-out`}
+                style={{
+                  width: i + 1 < currentStep ? '100%' : '0%'
+                }}
+              />
+            </div>
           )}
         </div>
       ))}
