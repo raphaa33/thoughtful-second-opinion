@@ -1,5 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Bookmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface HistoryItem {
   id: string;
@@ -25,7 +27,17 @@ export const HistoryList = ({ items }: HistoryListProps) => {
             {items.map((item) => (
               <div key={item.id} className="border-b pb-4 last:border-b-0">
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-sm font-medium text-brand-600">{item.topic}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-brand-600">{item.topic}</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => console.log('Saved opinion:', item.id)}
+                    >
+                      <Bookmark className="h-4 w-4" />
+                    </Button>
+                  </div>
                   <span className="text-xs text-muted-foreground">
                     {new Date(item.timestamp).toLocaleDateString()}
                   </span>
