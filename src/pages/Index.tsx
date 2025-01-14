@@ -9,7 +9,6 @@ import { StepIndicator } from "@/components/StepIndicator";
 import { ResponseCustomization } from "@/components/ResponseCustomization";
 import { RequestSummary } from "@/components/RequestSummary";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -158,7 +157,6 @@ const Index = () => {
       </div>
 
       <StepIndicator currentStep={currentStep} totalSteps={4} />
-      <Separator className="my-4" />
 
       <div className="max-w-3xl mx-auto">
         <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border/50">
