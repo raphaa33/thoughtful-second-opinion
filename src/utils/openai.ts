@@ -4,6 +4,12 @@ const generateOpinion = async (
   adviceStyle: string
 ) => {
   try {
+    console.log("Generating opinion with:", { question, tone, adviceStyle });
+    
+    if (!import.meta.env.VITE_OPENAI_API_KEY) {
+      throw new Error("OpenAI API key is not configured");
+    }
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -22,10 +28,12 @@ const generateOpinion = async (
             content: question,
           },
         ],
-        max_tokens: 500,
         temperature: 0.7,
+        max_tokens: 500,
       }),
     });
+
+    console.log("OpenAI API Response Status:", response.status);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -34,10 +42,16 @@ const generateOpinion = async (
     }
 
     const data = await response.json();
+    console.log("OpenAI API Response:", data);
+
+    if (!data.choices?.[0]?.message?.content) {
+      throw new Error("Invalid response format from OpenAI");
+    }
+
     return data.choices[0].message.content;
   } catch (error) {
     console.error("Error generating opinion:", error);
-    throw new Error("Failed to generate opinion. Please try again later.");
+    throw error;
   }
 };
 
