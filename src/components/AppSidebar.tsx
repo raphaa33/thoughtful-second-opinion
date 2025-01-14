@@ -1,4 +1,4 @@
-import { MessageSquare, Bookmark, Settings, User } from "lucide-react"
+import { MessageSquare, Bookmark, Settings, User, Users, List } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -16,6 +16,16 @@ const menuItems = [
     title: "Second Opinion",
     icon: MessageSquare,
     url: "/",
+  },
+  {
+    title: "Ask a Friend",
+    icon: Users,
+    url: "/ask-friend",
+  },
+  {
+    title: "Popular Questions",
+    icon: List,
+    url: "/popular",
   },
   {
     title: "Saved Opinions",
