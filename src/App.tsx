@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { OpinionsProvider } from "@/contexts/OpinionsContext"
+import Landing from "./pages/Landing"
 import Index from "./pages/Index"
 import PreviousOpinions from "./pages/PreviousOpinions"
 import AskFriend from "./pages/AskFriend"
@@ -38,7 +39,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return isAuthenticated ? (
@@ -62,6 +63,7 @@ const App = () => (
         <BrowserRouter>
           <SidebarProvider>
             <Routes>
+              <Route path="/landing" element={<Landing />} />
               <Route path="/login" element={<Login />} />
               <Route
                 path="/"
@@ -119,6 +121,7 @@ const App = () => (
                   </PrivateRoute>
                 }
               />
+              <Route path="*" element={<Navigate to="/landing" replace />} />
             </Routes>
           </SidebarProvider>
         </BrowserRouter>
