@@ -57,8 +57,8 @@ const Landing = () => {
 
       {/* Hero Section */}
       <main className="pt-32 pb-20 px-4 md:pt-40 md:pb-32">
-        <div className="container mx-auto max-w-7xl">
-          <div className="max-w-3xl mx-auto text-center">
+        <div className="container mx-auto">
+          <div className="flex flex-col items-center justify-center max-w-3xl mx-auto text-center">
             <h2 className="text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base">
               Your Trusted Second Opinion
             </h2>
