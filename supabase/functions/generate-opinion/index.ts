@@ -18,6 +18,7 @@ serve(async (req) => {
 
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) {
+      console.error('OpenAI API key is not configured');
       throw new Error('OpenAI API key is not configured');
     }
 
@@ -32,7 +33,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: question }
@@ -47,6 +48,9 @@ serve(async (req) => {
     
     if (!response.ok) {
       console.error('OpenAI API error:', data);
+      if (data.error?.type === 'insufficient_quota') {
+        throw new Error('OpenAI API quota exceeded');
+      }
       throw new Error(data.error?.message || 'Failed to generate opinion');
     }
 
