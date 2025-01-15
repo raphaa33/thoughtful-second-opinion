@@ -50,7 +50,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
       </SidebarInset>
     </div>
   ) : (
-    <Navigate to="/login" replace />
+    <Navigate to="/landing" replace />
   );
 };
 
