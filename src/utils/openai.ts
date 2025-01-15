@@ -3,16 +3,17 @@ import { supabase } from "@/integrations/supabase/client";
 export const generateOpinion = async (
   question: string,
   tone: string,
-  adviceStyle: string
+  adviceStyle: string,
+  topic: string,
+  imageData: string | null = null
 ) => {
   try {
     const { data, error } = await supabase.functions.invoke('generate-opinion', {
-      body: { question, tone, adviceStyle }
+      body: { question, tone, adviceStyle, topic, imageData }
     });
 
     if (error) {
       console.error('Error calling generate-opinion function:', error);
-      // Extract error message from the response if available
       const errorBody = error.message && error.message.includes('{') 
         ? JSON.parse(error.message)
         : null;

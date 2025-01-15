@@ -64,7 +64,16 @@ const Index = () => {
 
     setIsLoading(true);
     try {
-      const generatedOpinion = await generateOpinion(question, tone, adviceStyle);
+      let imageData = null;
+      if (selectedFile && selectedFile.type.startsWith('image/')) {
+        const reader = new FileReader();
+        imageData = await new Promise((resolve) => {
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(selectedFile);
+        });
+      }
+
+      const generatedOpinion = await generateOpinion(question, tone, adviceStyle, topic, imageData);
       setOpinion(generatedOpinion);
       addOpinion({
         topic,
