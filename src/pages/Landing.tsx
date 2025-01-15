@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowDown, CheckCircle } from "lucide-react";
+import { ArrowRight, Brain, MessageCircle, Shield, Sparkles } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -24,75 +24,117 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/50 to-background">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center max-w-7xl">
+      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg"></div>
+          <div className="w-8 h-8 bg-primary rounded-lg grid place-items-center">
+            <Brain className="w-5 h-5 text-primary-foreground" />
+          </div>
           <span className="text-xl font-semibold">My Second Opinion</span>
         </div>
         <nav className="hidden md:flex gap-8 items-center">
-          <a href="#how-it-works" className="text-foreground/80 hover:text-foreground">How it works</a>
-          <a href="#our-mission" className="text-foreground/80 hover:text-foreground">Our mission</a>
-          <a href="#faq" className="text-foreground/80 hover:text-foreground">FAQ</a>
-          <Button onClick={handleGetStarted} className="bg-[#2D2D2D] text-white hover:bg-[#2D2D2D]/90">
+          <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Features</a>
+          <a href="#how-it-works" className="text-foreground/80 hover:text-foreground transition-colors">How it works</a>
+          <Button onClick={handleGetStarted} variant="outline">
             Get started
           </Button>
         </nav>
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 text-center mt-20 mb-32 max-w-7xl">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-primary font-medium mb-6 tracking-wide">
-            YOUR TRUSTED SECOND OPINION
-          </h2>
-          <h1 className="text-5xl md:text-6xl font-semibold mb-8 text-[#2D2D2D]">
-            Get trusted advice when you need it most.
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Get personalized, unbiased opinions on your important decisions and dilemmas.
-          </p>
+      <section className="container mx-auto px-4 py-24 md:py-32">
+        <div className="max-w-[85rem] mx-auto">
+          <div className="grid lg:grid-cols-7 lg:gap-x-8 xl:gap-x-12 lg:items-center">
+            <div className="lg:col-span-3">
+              <h1 className="block text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+                Make better decisions with AI-powered insights
+              </h1>
+              <p className="mt-6 text-lg text-muted-foreground">
+                Get personalized, unbiased second opinions on your important decisions using advanced AI technology that considers multiple perspectives.
+              </p>
+              <div className="mt-8 grid gap-3 w-full sm:inline-flex">
+                <Button onClick={handleGetStarted} size="lg" className="gap-2">
+                  Start for free <ArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
 
-          {/* Features */}
-          <div className="flex flex-col gap-4 items-center mb-12">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="text-primary h-5 w-5" />
-              <span className="text-gray-600">AI-Powered Analysis</span>
+              {/* Trust Indicators */}
+              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:gap-x-8">
+                <div className="flex items-center gap-x-2">
+                  <Shield className="w-5 h-5 text-primary" />
+                  <span className="text-sm text-muted-foreground">Secure & Private</span>
+                </div>
+                <div className="flex items-center gap-x-2">
+                  <MessageCircle className="w-5 h-5 text-primary" />
+                  <span className="text-sm text-muted-foreground">24/7 Available</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="text-primary h-5 w-5" />
-              <span className="text-gray-600">Unbiased Perspectives</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="text-primary h-5 w-5" />
-              <span className="text-gray-600">Quick & Thoughtful Responses</span>
+
+            {/* Features Grid */}
+            <div className="lg:col-span-4 mt-10 lg:mt-0">
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    title: "AI-Powered Analysis",
+                    description: "Advanced algorithms analyze your situation from multiple angles",
+                    icon: Brain
+                  },
+                  {
+                    title: "Instant Insights",
+                    description: "Get thoughtful responses within seconds",
+                    icon: Sparkles
+                  },
+                  {
+                    title: "Unbiased Perspective",
+                    description: "Objective analysis free from emotional attachment",
+                    icon: Shield
+                  },
+                  {
+                    title: "Personalized Advice",
+                    description: "Tailored recommendations based on your context",
+                    icon: MessageCircle
+                  }
+                ].map((feature, index) => (
+                  <div
+                    key={index}
+                    className="group relative bg-background/50 border rounded-xl p-5 hover:border-primary transition-colors"
+                  >
+                    <div className="flex items-center gap-x-4">
+                      <feature.icon className="w-6 h-6 text-primary" />
+                      <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+                    </div>
+                    <p className="mt-3 text-muted-foreground">{feature.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Get Started Form */}
-          <div className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-6">
+            Ready to make better decisions?
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Input 
               placeholder="What's on your mind?" 
-              className="flex-1 text-lg h-12"
+              className="max-w-sm text-base"
             />
             <Button 
               onClick={handleGetStarted}
-              className="bg-[#2D2D2D] text-white hover:bg-[#2D2D2D]/90 h-12 px-8"
+              size="lg"
+              className="gap-2"
             >
-              Get started for free
+              Get started <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
-
-        {/* How it Works Section Indicator */}
-        <div className="mt-32 flex flex-col items-center gap-4">
-          <ArrowDown className="h-8 w-8 text-primary animate-bounce" />
-          <h3 className="text-primary font-medium tracking-wide">
-            HOW IT WORKS
-          </h3>
-        </div>
-      </main>
+      </section>
     </div>
   );
 };
