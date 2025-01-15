@@ -36,7 +36,11 @@ const Landing = () => {
         <nav className="hidden md:flex gap-8 items-center">
           <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Features</a>
           <a href="#how-it-works" className="text-foreground/80 hover:text-foreground transition-colors">How it works</a>
-          <Button onClick={handleGetStarted} variant="outline">
+          <Button 
+            onClick={handleGetStarted} 
+            variant="outline"
+            className="rounded-full border-primary/20 hover:bg-primary/5"
+          >
             Get started
           </Button>
         </nav>
@@ -54,8 +58,12 @@ const Landing = () => {
                 Get personalized, unbiased second opinions on your important decisions using advanced AI technology that considers multiple perspectives.
               </p>
               <div className="mt-8 grid gap-3 w-full sm:inline-flex">
-                <Button onClick={handleGetStarted} size="lg" className="gap-2">
-                  Start for free <ArrowRight className="w-4 h-4" />
+                <Button 
+                  onClick={handleGetStarted} 
+                  size="lg" 
+                  className="rounded-full text-lg font-medium bg-primary hover:bg-primary/90 text-white px-8"
+                >
+                  Get started for free
                 </Button>
               </div>
 
@@ -110,6 +118,7 @@ const Landing = () => {
                 ))}
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -123,14 +132,14 @@ const Landing = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Input 
               placeholder="What's on your mind?" 
-              className="max-w-sm text-base"
+              className="max-w-sm text-base rounded-full"
             />
             <Button 
               onClick={handleGetStarted}
               size="lg"
-              className="gap-2"
+              className="rounded-full text-lg font-medium bg-primary hover:bg-primary/90 text-white px-8"
             >
-              Get started <ArrowRight className="w-4 h-4" />
+              Get started for free
             </Button>
           </div>
         </div>
