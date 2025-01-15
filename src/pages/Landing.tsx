@@ -56,12 +56,14 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="pt-16 pb-20 px-4 md:pt-20 md:pb-32">
+      <main className="pt-24 pb-20 px-4 md:pt-32 md:pb-32">
         <div className="container mx-auto max-w-7xl flex justify-center">
           <div className="flex flex-col items-center justify-center w-full max-w-3xl text-center">
-            <h2 className="text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base">
-              Your Trusted Second Opinion
-            </h2>
+            <div className="animate-fade-in-up">
+              <h2 className="inline-block text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base bg-primary/10 px-4 py-2 rounded-full">
+                Your Trusted Second Opinion
+              </h2>
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight">
               Get trusted advice when you need it most.
             </h1>
