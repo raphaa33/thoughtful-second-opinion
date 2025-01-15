@@ -29,10 +29,10 @@ const Landing = () => {
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl grid place-items-center shadow-lg ring-2 ring-primary/20">
-            <Brain className="w-6 h-6 text-primary-foreground animate-pulse" />
+          <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl grid place-items-center shadow-lg ring-2 ring-primary/20">
+            <Brain className="w-8 h-8 text-primary-foreground animate-pulse" />
           </div>
-          <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">Second Opinion</span>
+          <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">My Second Opinion</span>
         </div>
         <nav className="hidden md:flex gap-8 items-center">
           <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Features</a>
