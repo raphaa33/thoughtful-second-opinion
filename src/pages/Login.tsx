@@ -18,7 +18,6 @@ const Login = () => {
     console.log("Auth error:", error);
     
     if (error instanceof AuthApiError) {
-      // Handle specific Supabase error codes
       switch (error.message) {
         case "Invalid login credentials":
           return "Invalid email or password. Please check your credentials and try again.";
@@ -39,8 +38,8 @@ const Login = () => {
   useEffect(() => {
     console.log("Login component mounted");
     
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session);
       
       if (event === 'SIGNED_IN' && session) {
         console.log('User signed in successfully:', session.user);
@@ -48,7 +47,8 @@ const Login = () => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate("/");
+        // Ensure immediate redirect after successful sign in
+        navigate("/", { replace: true });
       }
       
       if (event === 'SIGNED_OUT') {
@@ -61,6 +61,17 @@ const Login = () => {
         setError(null);
       }
     });
+
+    // Check if user is already authenticated on component mount
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        console.log('User already authenticated, redirecting...');
+        navigate("/", { replace: true });
+      }
+    };
+    
+    checkSession();
 
     return () => {
       subscription.unsubscribe();
