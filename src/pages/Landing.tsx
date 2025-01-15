@@ -57,8 +57,8 @@ const Landing = () => {
 
       {/* Hero Section */}
       <main className="pt-32 pb-20 px-4 md:pt-40 md:pb-32">
-        <div className="container mx-auto">
-          <div className="flex flex-col items-center justify-center max-w-3xl mx-auto text-center">
+        <div className="container mx-auto max-w-7xl flex justify-center">
+          <div className="flex flex-col items-center justify-center w-full max-w-3xl text-center">
             <h2 className="text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base">
               Your Trusted Second Opinion
             </h2>
@@ -86,7 +86,7 @@ const Landing = () => {
             </div>
 
             {/* Get Started Form */}
-            <div className="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+            <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
               <div className="flex flex-col md:flex-row gap-4">
                 <Input 
                   placeholder="What's on your mind?" 
