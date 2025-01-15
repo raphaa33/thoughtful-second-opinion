@@ -2,17 +2,25 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check if there's a subscription intent in the URL
+    const params = new URLSearchParams(location.search);
+    const hasSubscriptionIntent = params.get('subscribe') === 'true';
+    if (hasSubscriptionIntent) {
+      localStorage.setItem('subscriptionIntent', 'true');
+    }
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         toast({
@@ -39,7 +47,7 @@ const Login = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate, toast]);
+  }, [navigate, location.search, toast]);
 
   return (
     <div className="container mx-auto p-8 flex items-center justify-center min-h-screen">
