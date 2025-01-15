@@ -12,7 +12,11 @@ export const generateOpinion = async (
 
     if (error) {
       console.error('Error calling generate-opinion function:', error);
-      throw new Error('Failed to generate opinion');
+      // Extract error message from the response if available
+      const errorBody = error.message && error.message.includes('{') 
+        ? JSON.parse(error.message)
+        : null;
+      throw new Error(errorBody?.error || 'Failed to generate opinion');
     }
 
     if (data.error) {
