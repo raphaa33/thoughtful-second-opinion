@@ -18,15 +18,13 @@ const Login = () => {
     console.log("Auth error:", error);
     
     if (error instanceof AuthApiError) {
-      switch (error.code) {
-        case "invalid_credentials":
+      switch (error.status) {
+        case 400:
           return "Invalid email or password. Please check your credentials and try again.";
-        case "email_not_confirmed":
+        case 401:
           return "Please verify your email address before signing in.";
-        case "user_not_found":
+        case 404:
           return "No user found with these credentials.";
-        case "invalid_grant":
-          return "Invalid login credentials.";
         default:
           return `Authentication error: ${error.message}`;
       }
@@ -37,8 +35,8 @@ const Login = () => {
   useEffect(() => {
     console.log("Login component mounted");
     
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, session);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event);
       
       if (event === 'SIGNED_IN' && session) {
         console.log('User signed in successfully:', session.user);
@@ -53,19 +51,11 @@ const Login = () => {
         console.log('User signed out');
         setError(null);
       }
-
-      // Handle authentication errors
-      if (event === 'USER_UPDATED' && !session) {
-        console.log('Checking for auth errors...');
-        const { error } = await supabase.auth.getSession();
-        if (error) {
-          console.error('Auth error detected:', error);
-          setError(getErrorMessage(error));
-        }
-      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [navigate, toast]);
 
   return (
