@@ -14,8 +14,7 @@ const Login = () => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event, session);
-      if (event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN' && session) {
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
@@ -25,6 +24,7 @@ const Login = () => {
       if (event === 'SIGNED_OUT') {
         setError(null);
       }
+      // Handle auth errors through the state change event
       if (event === 'USER_UPDATED' && !session) {
         setError("Authentication failed. Please try again.");
       }
