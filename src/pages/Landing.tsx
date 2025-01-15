@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowDown, CheckCircle, Menu } from "lucide-react";
+import { Rocket, CheckCircle, ArrowRight } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -30,22 +30,22 @@ const Landing = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">SO</span>
+              <span className="text-white font-bold text-xl">WH</span>
             </div>
-            <span className="text-xl font-semibold text-gray-900">My Second Opinion</span>
+            <span className="text-xl font-semibold text-gray-900">We're Here to Help</span>
           </div>
           
-          <button className="md:hidden p-2">
-            <Menu className="h-6 w-6 text-gray-600" />
-          </button>
-
           <nav className="hidden md:flex gap-8 items-center">
-            <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 transition-colors">How it works</a>
-            <a href="#our-mission" className="text-gray-600 hover:text-gray-900 transition-colors">Our mission</a>
-            <a href="#faq" className="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a>
             <Button 
-              onClick={handleGetStarted} 
-              className="bg-primary hover:bg-primary/90 text-white font-medium"
+              variant="ghost"
+              onClick={handleGetStarted}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              Sign in
+            </Button>
+            <Button 
+              onClick={handleGetStarted}
+              className="bg-primary hover:bg-primary/90"
             >
               Get started
             </Button>
@@ -53,43 +53,20 @@ const Landing = () => {
         </div>
       </header>
 
-      {/* Main Content - Centered vertically and horizontally */}
+      {/* Main Content */}
       <main className="flex min-h-screen items-center justify-center px-4">
         <div className="w-full max-w-4xl mx-auto text-center pt-20">
-          {/* Badge */}
-          <div className="animate-fade-in-up mb-12">
-            <h2 className="inline-block text-primary font-medium tracking-wide uppercase text-sm md:text-base bg-primary/10 px-4 py-2 rounded-full">
-              Your Trusted Second Opinion
-            </h2>
-          </div>
-
-          {/* Headline and Subheading */}
+          {/* Hero Section */}
           <div className="space-y-6 mb-12">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight max-w-3xl mx-auto">
-              Get trusted advice when you need it most.
+              Get trusted advice when you need it most
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Get personalized, unbiased opinions on your important decisions and dilemmas.
+              Share your thoughts and get personalized, unbiased opinions to help you make better decisions.
             </p>
           </div>
 
-          {/* Features */}
-          <div className="flex flex-col items-center gap-6 max-w-xl mx-auto mb-12">
-            <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full w-full justify-center">
-              <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
-              <span className="text-gray-700">AI-Powered Analysis</span>
-            </div>
-            <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full w-full justify-center">
-              <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
-              <span className="text-gray-700">Unbiased Perspectives</span>
-            </div>
-            <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full w-full justify-center">
-              <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
-              <span className="text-gray-700">Quick & Thoughtful Responses</span>
-            </div>
-          </div>
-
-          {/* Get Started Form */}
+          {/* Main CTA Form */}
           <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-12">
             <div className="flex gap-4">
               <Input 
@@ -98,19 +75,43 @@ const Landing = () => {
               />
               <Button 
                 onClick={handleGetStarted}
-                className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium whitespace-nowrap"
+                className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium whitespace-nowrap flex items-center gap-2"
               >
                 Get started for free
+                <ArrowRight className="h-5 w-5" />
               </Button>
             </div>
           </div>
 
-          {/* How it Works Section Indicator */}
-          <div className="flex flex-col items-center gap-4">
-            <ArrowDown className="h-8 w-8 text-primary animate-bounce" />
-            <h3 className="text-primary font-medium tracking-wide uppercase text-sm">
-              How it Works
-            </h3>
+          {/* Features */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="flex flex-col items-center gap-4 p-6 bg-white/50 rounded-2xl">
+              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
+                <Rocket className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold">Quick Responses</h3>
+              <p className="text-gray-600 text-center">
+                Get thoughtful answers to your questions within minutes
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-4 p-6 bg-white/50 rounded-2xl">
+              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
+                <CheckCircle className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold">Unbiased Advice</h3>
+              <p className="text-gray-600 text-center">
+                Receive balanced perspectives to help you make informed decisions
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-4 p-6 bg-white/50 rounded-2xl">
+              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
+                <CheckCircle className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold">Private & Secure</h3>
+              <p className="text-gray-600 text-center">
+                Your conversations are always private and protected
+              </p>
+            </div>
           </div>
         </div>
       </main>
