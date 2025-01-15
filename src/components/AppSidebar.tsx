@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
+  SidebarHeader,
 } from "@/components/ui/sidebar"
 
 const menuItems = [
@@ -40,6 +41,17 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
+      <SidebarHeader className="border-b border-border/10">
+        <div className="flex items-center gap-2 px-4 py-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+            <MessageSquare className="h-4 w-4 text-primary-foreground" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold">My Second Opinion</span>
+            <span className="text-xs text-muted-foreground">AI Assistant</span>
+          </div>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Menu</SidebarGroupLabel>
