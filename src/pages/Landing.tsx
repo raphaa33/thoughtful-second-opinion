@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, Brain, Check, MessageCircle, Shield, Sparkles } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -22,6 +24,38 @@ const Landing = () => {
 
   const handleGetStarted = () => {
     navigate('/login');
+  };
+
+  const handleSubscribe = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to subscribe",
+          variant: "destructive",
+        });
+        navigate('/login');
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: {},
+      });
+
+      if (error) throw error;
+      if (!data.url) throw new Error('No checkout URL returned');
+
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to start checkout process",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -148,8 +182,8 @@ const Landing = () => {
               </ul>
             </CardContent>
             <CardFooter>
-              <Button onClick={handleGetStarted} className="w-full">
-                Get Started Now
+              <Button onClick={handleSubscribe} className="w-full">
+                Subscribe Now
               </Button>
             </CardFooter>
           </Card>
