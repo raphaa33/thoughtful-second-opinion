@@ -17,9 +17,10 @@ const Settings = () => {
 
   useEffect(() => {
     loadUserPreferences();
-    // Initialize theme
-    const currentTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
-    setTheme(currentTheme);
+    // Initialize theme from localStorage or system preference
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
   const loadUserPreferences = async () => {
@@ -94,7 +95,12 @@ const Settings = () => {
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
-    document.documentElement.classList.toggle("dark");
+    // Update localStorage
+    localStorage.setItem("theme", newTheme);
+    // Update DOM
+    document.documentElement.classList.remove(theme);
+    document.documentElement.classList.add(newTheme);
+    // Update state
     setTheme(newTheme);
     toast({
       title: "Theme Updated",
