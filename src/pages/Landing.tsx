@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Brain, MessageCircle, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Brain, Check, MessageCircle, Shield, Sparkles } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -111,6 +112,47 @@ const Landing = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-muted-foreground">Get unlimited access to AI-powered second opinions</p>
+          </div>
+          
+          <Card className="w-full max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle>Full Access</CardTitle>
+              <CardDescription>Everything you need for better decisions</CardDescription>
+              <div className="mt-4">
+                <span className="text-4xl font-bold">$5</span>
+                <span className="text-muted-foreground">/month</span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3">
+                {[
+                  "Unlimited AI consultations",
+                  "Personalized insights",
+                  "Save & review past opinions",
+                  "Priority support"
+                ].map((feature) => (
+                  <li key={feature} className="flex items-center gap-2">
+                    <Check className="w-5 h-5 text-primary" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={handleGetStarted} className="w-full">
+                Get Started Now
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </section>
 
