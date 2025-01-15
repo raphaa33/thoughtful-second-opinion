@@ -61,7 +61,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-20">
+      <main className="flex-1 flex flex-col items-center justify-center">
         <div className="container mx-auto px-4">
           {/* Main Content */}
           <div className="max-w-3xl mx-auto text-center space-y-8">
