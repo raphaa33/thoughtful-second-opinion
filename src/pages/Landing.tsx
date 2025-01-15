@@ -56,34 +56,18 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
+      <main className="pt-32 pb-20 px-4 md:pt-40 md:pb-32">
         <div className="container mx-auto max-w-7xl flex justify-center">
           <div className="flex flex-col items-center justify-center w-full max-w-3xl text-center">
-            <h2 className="text-primary font-medium mb-4 tracking-wide uppercase text-sm md:text-base">
+            <h2 className="text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base">
               Your Trusted Second Opinion
             </h2>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight">
               Get trusted advice when you need it most.
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
               Get personalized, unbiased opinions on your important decisions and dilemmas.
             </p>
-
-            {/* Get Started Form */}
-            <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-12">
-              <div className="flex flex-col md:flex-row gap-4">
-                <Input 
-                  placeholder="What's on your mind?" 
-                  className="flex-1 text-lg h-12 border-gray-200"
-                />
-                <Button 
-                  onClick={handleGetStarted}
-                  className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium"
-                >
-                  Get started for free
-                </Button>
-              </div>
-            </div>
 
             {/* Features */}
             <div className="flex flex-col gap-6 items-center justify-center mb-12">
@@ -101,14 +85,30 @@ const Landing = () => {
               </div>
             </div>
 
-            {/* How it Works Section Indicator */}
-            <div className="mt-20 flex flex-col items-center gap-4">
-              <ArrowDown className="h-8 w-8 text-primary animate-bounce" />
-              <h3 className="text-primary font-medium tracking-wide uppercase text-sm">
-                How it Works
-              </h3>
+            {/* Get Started Form */}
+            <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+              <div className="flex flex-col md:flex-row gap-4">
+                <Input 
+                  placeholder="What's on your mind?" 
+                  className="flex-1 text-lg h-12 border-gray-200"
+                />
+                <Button 
+                  onClick={handleGetStarted}
+                  className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium"
+                >
+                  Get started for free
+                </Button>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* How it Works Section Indicator */}
+        <div className="mt-32 flex flex-col items-center gap-4">
+          <ArrowDown className="h-8 w-8 text-primary animate-bounce" />
+          <h3 className="text-primary font-medium tracking-wide uppercase text-sm">
+            How it Works
+          </h3>
         </div>
       </main>
     </div>
