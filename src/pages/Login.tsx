@@ -65,8 +65,8 @@ const Login = () => {
 
           {/* Right Column - Auth Form */}
           <Card className="w-full shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-center md:text-left">Sign In</CardTitle>
+            <CardHeader className="flex flex-col items-center">
+              <CardTitle className="text-2xl">Sign In</CardTitle>
             </CardHeader>
             <CardContent>
               {error && (
