@@ -42,7 +42,7 @@ const Login = () => {
           <div className="hidden md:flex flex-col space-y-6 p-8">
             <div className="flex items-center gap-2 text-primary">
               <Sparkles className="h-8 w-8" />
-              <h1 className="text-4xl font-bold">Insight Advisor</h1>
+              <h1 className="text-4xl font-bold">We're Here to Help</h1>
             </div>
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-foreground">Welcome Back!</h2>
