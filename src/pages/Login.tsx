@@ -18,12 +18,19 @@ const Login = () => {
     console.log("Auth error:", error);
     
     if (error instanceof AuthApiError) {
-      switch (error.message) {
-        case "Invalid login credentials":
+      // Check the error code from the response body
+      const errorBody = error.message.includes('{') 
+        ? JSON.parse(error.message)
+        : { code: error.message };
+      
+      switch (errorBody.code) {
+        case "user_already_exists":
+          return "This email is already registered. Please try logging in instead.";
+        case "invalid_credentials":
           return "Invalid email or password. Please check your credentials and try again.";
-        case "Email not confirmed":
+        case "email_not_confirmed":
           return "Please verify your email address before signing in.";
-        case "User not found":
+        case "user_not_found":
           return "No user found with these credentials.";
         default:
           if (error.message) {
@@ -54,6 +61,14 @@ const Login = () => {
       if (event === 'SIGNED_OUT') {
         console.log('User signed out');
         setError(null);
+      }
+
+      // Handle specific auth errors
+      if (event === 'USER_UPDATED' && !session) {
+        const { error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) {
+          setError(getErrorMessage(sessionError));
+        }
       }
 
       // Reset error on specific auth events
