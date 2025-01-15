@@ -54,18 +54,18 @@ const Landing = () => {
       </header>
 
       {/* Main Content - Centered vertically and horizontally */}
-      <main className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 mt-20">
-        <div className="container max-w-4xl mx-auto flex flex-col items-center space-y-12">
+      <main className="flex min-h-screen items-center justify-center px-4">
+        <div className="w-full max-w-4xl mx-auto text-center pt-20">
           {/* Badge */}
-          <div className="animate-fade-in-up">
+          <div className="animate-fade-in-up mb-12">
             <h2 className="inline-block text-primary font-medium tracking-wide uppercase text-sm md:text-base bg-primary/10 px-4 py-2 rounded-full">
               Your Trusted Second Opinion
             </h2>
           </div>
 
           {/* Headline and Subheading */}
-          <div className="space-y-6 text-center">
-            <h1 className="text-6xl font-bold text-gray-900 leading-tight">
+          <div className="space-y-6 mb-12">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight max-w-3xl mx-auto">
               Get trusted advice when you need it most.
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -74,7 +74,7 @@ const Landing = () => {
           </div>
 
           {/* Features */}
-          <div className="flex flex-col items-center gap-6 w-full max-w-xl">
+          <div className="flex flex-col items-center gap-6 max-w-xl mx-auto mb-12">
             <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full w-full justify-center">
               <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
               <span className="text-gray-700">AI-Powered Analysis</span>
@@ -90,7 +90,7 @@ const Landing = () => {
           </div>
 
           {/* Get Started Form */}
-          <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+          <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-12">
             <div className="flex gap-4">
               <Input 
                 placeholder="What's on your mind?" 
@@ -98,7 +98,7 @@ const Landing = () => {
               />
               <Button 
                 onClick={handleGetStarted}
-                className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium"
+                className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium whitespace-nowrap"
               >
                 Get started for free
               </Button>
