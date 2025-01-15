@@ -44,6 +44,8 @@ const Index = () => {
   };
 
   const handleSubmit = async () => {
+    if (isLoading) return; // Prevent multiple submissions while loading
+    
     if (!topic) {
       toast({
         title: "Please select a topic",
@@ -172,6 +174,7 @@ const Index = () => {
                 onClick={handleBack}
                 variant="outline"
                 className="flex items-center gap-2"
+                disabled={isLoading}
               >
                 <ArrowLeft className="h-4 w-4" /> Back
               </Button>
@@ -180,6 +183,7 @@ const Index = () => {
               <Button
                 onClick={currentStep === 3 ? handleSubmit : handleNext}
                 className="flex items-center gap-2 ml-auto"
+                disabled={isLoading}
               >
                 {currentStep === 3 ? "Get Opinion" : "Next"}{" "}
                 <ArrowRight className="h-4 w-4" />
