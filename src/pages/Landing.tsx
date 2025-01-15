@@ -48,7 +48,7 @@ const Landing = () => {
           <div className="grid lg:grid-cols-7 lg:gap-x-8 xl:gap-x-12 lg:items-center">
             <div className="lg:col-span-3">
               <h1 className="block text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-                Make better decisions with AI-powered insights
+                Get trusted Advice when you need it most
               </h1>
               <p className="mt-6 text-lg text-muted-foreground">
                 Get personalized, unbiased second opinions on your important decisions using advanced AI technology that considers multiple perspectives.
