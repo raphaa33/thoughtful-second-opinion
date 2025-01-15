@@ -14,7 +14,12 @@ const Login = () => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, session);
       if (event === 'SIGNED_IN') {
+        toast({
+          title: "Welcome back!",
+          description: "You have successfully signed in.",
+        });
         navigate("/");
       }
       if (event === 'SIGNED_OUT') {
@@ -26,7 +31,7 @@ const Login = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, toast]);
 
   return (
     <div className="container mx-auto p-8 flex items-center justify-center min-h-screen">
