@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Brain, MessageCircle, Shield, Sparkles } from "lucide-react";
+import { Brain, MessageCircle, Shield, Sparkles } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -46,8 +46,17 @@ const Landing = () => {
         </nav>
       </header>
 
+      {/* Trusted Second Opinion Banner */}
+      <div className="container mx-auto px-4 py-8">
+        <img 
+          src="/lovable-uploads/67c9fe1d-0904-4c8d-ae9a-e60dad044e37.png" 
+          alt="Your Trusted Second Opinion" 
+          className="max-w-3xl mx-auto w-full"
+        />
+      </div>
+
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 md:py-32">
+      <section className="container mx-auto px-4 py-12 md:py-20">
         <div className="max-w-[85rem] mx-auto">
           <div className="grid lg:grid-cols-7 lg:gap-x-8 xl:gap-x-12 lg:items-center">
             <div className="lg:col-span-3 mx-auto text-center lg:text-left max-w-2xl">
