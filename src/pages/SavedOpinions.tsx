@@ -58,6 +58,10 @@ const SavedOpinions = () => {
     fetchSavedOpinions();
   }, [toast]);
 
+  const handleDelete = (id: string) => {
+    setSavedOpinions(prevOpinions => prevOpinions.filter(opinion => opinion.id !== id));
+  };
+
   if (savedOpinions.length === 0 && !isLoading) {
     return (
       <div className="container mx-auto p-8">
@@ -98,7 +102,11 @@ const SavedOpinions = () => {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
           </div>
         ) : (
-          <HistoryList items={savedOpinions} />
+          <HistoryList 
+            items={savedOpinions} 
+            showSaveButton={false}
+            onDelete={handleDelete}
+          />
         )}
       </Card>
     </div>

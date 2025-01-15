@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Bookmark } from "lucide-react";
+import { Bookmark, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -21,9 +21,11 @@ interface HistoryItem {
 
 interface HistoryListProps {
   items: HistoryItem[];
+  showSaveButton?: boolean;
+  onDelete?: (id: string) => void;
 }
 
-export const HistoryList = ({ items }: HistoryListProps) => {
+export const HistoryList = ({ items, showSaveButton = true, onDelete }: HistoryListProps) => {
   const { toast } = useToast();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -88,6 +90,33 @@ export const HistoryList = ({ items }: HistoryListProps) => {
     });
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('saved_opinions')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Opinion deleted successfully!",
+      });
+
+      if (onDelete) {
+        onDelete(id);
+      }
+    } catch (error) {
+      console.error('Error deleting opinion:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete the opinion. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <ScrollArea className="h-[500px] pr-4">
       <div className="space-y-4">
@@ -96,25 +125,48 @@ export const HistoryList = ({ items }: HistoryListProps) => {
             <div className="flex justify-between items-start mb-2">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-brand-600">{item.topic}</span>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className={`h-8 w-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
-                        onClick={() => handleSave(item)}
-                      >
-                        <Bookmark className="h-4 w-4" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      {isAuthenticated 
-                        ? "Save this opinion"
-                        : "Sign in to save opinions"}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <div className="flex gap-2">
+                  {showSaveButton && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={`h-8 w-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                            onClick={() => handleSave(item)}
+                          >
+                            <Bookmark className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {isAuthenticated 
+                            ? "Save this opinion"
+                            : "Sign in to save opinions"}
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                  {!showSaveButton && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleDelete(item.id)}
+                          >
+                            <Trash2 className="h-4 w-4 text-red-500" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          Delete this opinion
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                </div>
               </div>
               <span className="text-xs text-muted-foreground">
                 {new Date(item.timestamp).toLocaleDateString()}
