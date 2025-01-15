@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Crown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -29,7 +29,25 @@ const Landing = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Crown className="w-8 h-8 text-primary" />
+            <svg
+              viewBox="0 0 24 24"
+              className="w-8 h-8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                fill="currentColor"
+                className="text-primary"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="4"
+                fill="white"
+                className="text-white"
+              />
+            </svg>
             <span className="text-xl font-medium text-gray-900">My Second Opinion</span>
           </div>
           <Button 
