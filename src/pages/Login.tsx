@@ -7,12 +7,28 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { Sparkles } from "lucide-react";
-import { AuthError } from "@supabase/supabase-js";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
 
 const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
+
+  const getErrorMessage = (error: AuthError) => {
+    console.log("Auth error:", error);
+    
+    if (error instanceof AuthApiError) {
+      switch (error.message) {
+        case "Invalid login credentials":
+          return "Invalid email or password. Please check your credentials and try again.";
+        case "Email not confirmed":
+          return "Please verify your email address before signing in.";
+        default:
+          return error.message;
+      }
+    }
+    return error.message;
+  };
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -41,17 +57,6 @@ const Login = () => {
 
     return () => subscription.unsubscribe();
   }, [navigate, toast]);
-
-  const getErrorMessage = (error: AuthError) => {
-    switch (error.message) {
-      case 'Invalid login credentials':
-        return 'Invalid email or password. Please check your credentials and try again.';
-      case 'Email not confirmed':
-        return 'Please verify your email address before signing in.';
-      default:
-        return error.message;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
