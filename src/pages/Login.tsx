@@ -23,6 +23,10 @@ const Login = () => {
           return "Invalid email or password. Please check your credentials and try again.";
         case "email_not_confirmed":
           return "Please verify your email address before signing in.";
+        case "user_not_found":
+          return "No user found with these credentials.";
+        case "invalid_grant":
+          return "Invalid login credentials.";
         default:
           return `Authentication error: ${error.message}`;
       }
@@ -31,10 +35,13 @@ const Login = () => {
   };
 
   useEffect(() => {
+    console.log("Login component mounted");
+    
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('Auth state changed:', event, session);
       
       if (event === 'SIGNED_IN' && session) {
+        console.log('User signed in successfully:', session.user);
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
@@ -43,13 +50,16 @@ const Login = () => {
       }
       
       if (event === 'SIGNED_OUT') {
+        console.log('User signed out');
         setError(null);
       }
 
       // Handle authentication errors
       if (event === 'USER_UPDATED' && !session) {
+        console.log('Checking for auth errors...');
         const { error } = await supabase.auth.getSession();
         if (error) {
+          console.error('Auth error detected:', error);
           setError(getErrorMessage(error));
         }
       }
