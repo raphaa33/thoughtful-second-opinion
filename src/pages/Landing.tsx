@@ -56,7 +56,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20 px-4 md:pt-40 md:pb-32">
+      <main className="pt-16 pb-20 px-4 md:pt-20 md:pb-32">
         <div className="container mx-auto max-w-7xl flex justify-center">
           <div className="flex flex-col items-center justify-center w-full max-w-3xl text-center">
             <h2 className="text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base">
