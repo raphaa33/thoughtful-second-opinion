@@ -57,7 +57,7 @@ const Landing = () => {
 
       {/* Hero Section */}
       <main className="pt-32 pb-20 px-4 md:pt-40 md:pb-32">
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-7xl">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base">
               Your Trusted Second Opinion
@@ -70,7 +70,7 @@ const Landing = () => {
             </p>
 
             {/* Features */}
-            <div className="flex flex-col gap-6 items-center mb-12">
+            <div className="flex flex-col gap-6 items-center justify-center mb-12">
               <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full">
                 <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
                 <span className="text-gray-700">AI-Powered Analysis</span>
