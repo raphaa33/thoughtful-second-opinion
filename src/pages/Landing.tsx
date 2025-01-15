@@ -27,11 +27,19 @@ const Landing = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/50 to-background">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg grid place-items-center">
-            <Brain className="w-5 h-5 text-primary-foreground" />
+        <div className="flex items-center gap-3">
+          <div className="relative group">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary/90 to-primary rounded-xl grid place-items-center transform transition-all duration-300 group-hover:rotate-6 shadow-lg">
+              <Brain className="w-6 h-6 text-primary-foreground transform transition-transform group-hover:scale-110" />
+            </div>
+            <div className="absolute inset-0 bg-primary/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          <span className="text-xl font-semibold">My Second Opinion</span>
+          <div className="flex flex-col items-start">
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
+              Second Opinion
+            </span>
+            <span className="text-xs text-muted-foreground">AI-Powered Insights</span>
+          </div>
         </div>
         <nav className="hidden md:flex gap-8 items-center">
           <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Features</a>
