@@ -3,6 +3,7 @@ import { useOpinions } from "@/contexts/OpinionsContext";
 import { HistoryList } from "@/components/HistoryList";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const PreviousOpinions = () => {
   const { opinions } = useOpinions();
@@ -42,7 +43,9 @@ const PreviousOpinions = () => {
           New Opinion
         </Button>
       </div>
-      <HistoryList items={opinions} />
+      <Card className="p-6">
+        <HistoryList items={opinions} />
+      </Card>
     </div>
   );
 };
