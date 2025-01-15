@@ -14,17 +14,21 @@ serve(async (req) => {
 
   try {
     const { question, tone, adviceStyle } = await req.json();
-    console.log('Generating opinion for:', { question, tone, adviceStyle });
+    console.log('Received request with:', { question, tone, adviceStyle });
+
+    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openAIApiKey) {
+      throw new Error('OpenAI API key is not configured');
+    }
 
     const systemPrompt = `You are an AI giving advice in a ${tone} tone, speaking as if you were providing ${adviceStyle} advice. 
     Be helpful, concise, and maintain the appropriate tone throughout your response.`;
 
-    console.log('Using system prompt:', systemPrompt);
-
+    console.log('Making request to OpenAI API...');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+        'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -38,8 +42,8 @@ serve(async (req) => {
       }),
     });
 
-    const data = await response.json();
     console.log('OpenAI API response status:', response.status);
+    const data = await response.json();
     
     if (!response.ok) {
       console.error('OpenAI API error:', data);
@@ -61,7 +65,7 @@ serve(async (req) => {
     console.error('Error in generate-opinion function:', error);
     
     const errorMessage = error.message?.includes('quota') 
-      ? 'OpenAI service quota exceeded. Please try again later.'
+      ? 'OpenAI service quota exceeded. Please check your billing details.'
       : error.message?.includes('API')
       ? 'OpenAI service is temporarily unavailable. Please try again later.'
       : error.message || 'An unexpected error occurred';
