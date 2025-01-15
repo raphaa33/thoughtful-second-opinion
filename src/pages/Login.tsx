@@ -15,28 +15,34 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
 
   const getErrorMessage = (error: AuthError) => {
-    console.log("Auth error:", error);
+    console.log("Auth error details:", {
+      message: error.message,
+      name: error.name,
+      status: error.status,
+    });
     
     if (error instanceof AuthApiError) {
-      // Check the error code from the response body
-      const errorBody = error.message.includes('{') 
-        ? JSON.parse(error.message)
-        : { code: error.message };
-      
-      switch (errorBody.code) {
-        case "user_already_exists":
-          return "This email is already registered. Please try logging in instead.";
-        case "invalid_credentials":
-          return "Invalid email or password. Please check your credentials and try again.";
-        case "email_not_confirmed":
-          return "Please verify your email address before signing in.";
-        case "user_not_found":
-          return "No user found with these credentials.";
-        default:
-          if (error.message) {
-            return `Authentication error: ${error.message}`;
-          }
-          return "An unexpected authentication error occurred. Please try again.";
+      let errorMessage = error.message;
+      try {
+        // Try to parse the error message if it's JSON
+        const errorData = JSON.parse(error.message);
+        errorMessage = errorData.message;
+        
+        switch (errorData.code) {
+          case "user_already_exists":
+            return "This email is already registered. Please try logging in instead.";
+          case "invalid_credentials":
+            return "Invalid email or password. Please check your credentials and try again.";
+          case "email_not_confirmed":
+            return "Please verify your email address before signing in.";
+          case "user_not_found":
+            return "No user found with these credentials.";
+          default:
+            return `Authentication error: ${errorMessage}`;
+        }
+      } catch {
+        // If parsing fails, use the raw message
+        return `Authentication error: ${errorMessage}`;
       }
     }
     return `Unexpected error: ${error.message}`;
@@ -45,6 +51,19 @@ const Login = () => {
   useEffect(() => {
     console.log("Login component mounted");
     
+    // Check if user is already authenticated
+    const checkSession = async () => {
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log("Initial session check:", { session, error: sessionError });
+      
+      if (session) {
+        console.log("User already authenticated, redirecting...");
+        navigate("/", { replace: true });
+      }
+    };
+    
+    checkSession();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('Auth state changed:', event, session);
       
@@ -54,7 +73,6 @@ const Login = () => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        // Ensure immediate redirect after successful sign in
         navigate("/", { replace: true });
       }
       
@@ -63,10 +81,10 @@ const Login = () => {
         setError(null);
       }
 
-      // Handle specific auth errors
-      if (event === 'USER_UPDATED' && !session) {
+      if (event === 'USER_UPDATED') {
         const { error: sessionError } = await supabase.auth.getSession();
         if (sessionError) {
+          console.error('Session error:', sessionError);
           setError(getErrorMessage(sessionError));
         }
       }
@@ -76,17 +94,6 @@ const Login = () => {
         setError(null);
       }
     });
-
-    // Check if user is already authenticated on component mount
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        console.log('User already authenticated, redirecting...');
-        navigate("/", { replace: true });
-      }
-    };
-    
-    checkSession();
 
     return () => {
       subscription.unsubscribe();
