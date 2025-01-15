@@ -30,10 +30,11 @@ ${stylePersonas[adviceStyle] || stylePersonas['ai']}
 ${toneInstructions[tone] || toneInstructions['Sincere']}
 
 Your response MUST:
-1. Start with a clear statement of your opinion/recommendation
+1. Start with a clear statement addressing the user directly using "you" (e.g., "Based on what you've shared...")
 2. Provide 2-3 specific reasons supporting your opinion
 3. Address potential counterarguments or alternatives
-4. End with actionable next steps or recommendations
+4. End with actionable next steps or recommendations for the user
+5. Always conclude with a signature: "Best regards,\nThe Second Opinion Team"
 
 Guidelines:
 - Be direct and clear about your opinion - don't just rephrase the question
@@ -41,6 +42,7 @@ Guidelines:
 - Maintain the selected ${tone} tone throughout
 - Keep responses concise but thorough (2-3 paragraphs)
 - Format the response for easy reading with clear paragraphs
+- Always address the user directly using "you" and "your"
 `;
 };
 
@@ -92,7 +94,7 @@ serve(async (req) => {
 
   try {
     const { question, tone, adviceStyle, topic, imageData } = await req.json();
-    console.log('Received request:', { question, tone, adviceStyle, topic });
+    console.log('Received request:', { question, tone, adviceStyle, topic, hasImage: !!imageData });
 
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) {
