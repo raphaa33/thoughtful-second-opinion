@@ -18,16 +18,16 @@ const Login = () => {
     console.log("Auth error:", error);
     
     if (error instanceof AuthApiError) {
-      switch (error.message) {
-        case "Invalid login credentials":
+      switch (error.code) {
+        case "invalid_credentials":
           return "Invalid email or password. Please check your credentials and try again.";
-        case "Email not confirmed":
+        case "email_not_confirmed":
           return "Please verify your email address before signing in.";
         default:
-          return error.message;
+          return `Authentication error: ${error.message}`;
       }
     }
-    return error.message;
+    return `Unexpected error: ${error.message}`;
   };
 
   useEffect(() => {
