@@ -61,11 +61,11 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex items-center justify-center">
+      <main className="flex-1 flex flex-col items-center justify-center">
         <div className="container mx-auto px-4">
           {/* Main Content */}
           <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-gray-900 tracking-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-gray-900">
               Turn thoughts into
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent"> clarity</span>
             </h1>
@@ -75,7 +75,7 @@ const Landing = () => {
             </p>
 
             {/* CTA Section */}
-            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto pt-8">
               <Input 
                 placeholder="What's on your mind?" 
                 className="h-12 bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary/20 text-gray-900 placeholder:text-gray-500"
