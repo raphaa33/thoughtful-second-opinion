@@ -22,9 +22,10 @@ const Settings = () => {
       const { data: preferences, error } = await supabase
         .from('user_preferences')
         .select('*')
-        .single();
+        .eq('user_id', user.id)
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') { // PGRST116 means no rows returned
+      if (error) {
         throw error;
       }
 
@@ -32,10 +33,14 @@ const Settings = () => {
         setHideSaveButton(preferences.hide_save_button || false);
       } else {
         // Create default preferences if none exist
-        await supabase.from('user_preferences').insert({
-          user_id: user.id,
-          hide_save_button: false,
-        });
+        const { error: insertError } = await supabase
+          .from('user_preferences')
+          .insert({
+            user_id: user.id,
+            hide_save_button: false,
+          });
+        
+        if (insertError) throw insertError;
       }
     } catch (error) {
       console.error('Error loading preferences:', error);
