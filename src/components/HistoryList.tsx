@@ -4,6 +4,13 @@ import { Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useState, useEffect } from "react";
 
 interface HistoryItem {
   id: string;
@@ -19,6 +26,22 @@ interface HistoryListProps {
 
 export const HistoryList = ({ items }: HistoryListProps) => {
   const { toast } = useToast();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session?.user);
+    };
+
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session?.user);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleSave = async (item: HistoryItem) => {
     const { data: session } = await supabase.auth.getSession();
@@ -70,14 +93,25 @@ export const HistoryList = ({ items }: HistoryListProps) => {
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-brand-600">{item.topic}</span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={() => handleSave(item)}
-                    >
-                      <Bookmark className="h-4 w-4" />
-                    </Button>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={`h-8 w-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                            onClick={() => handleSave(item)}
+                          >
+                            <Bookmark className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {isAuthenticated 
+                            ? "Save this opinion"
+                            : "Sign in to save opinions"}
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                   <span className="text-xs text-muted-foreground">
                     {new Date(item.timestamp).toLocaleDateString()}
