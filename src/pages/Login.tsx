@@ -13,18 +13,26 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate("/");
+        
+        // Check if there was a subscription intent
+        const subscriptionIntent = localStorage.getItem('subscriptionIntent');
+        if (subscriptionIntent) {
+          localStorage.removeItem('subscriptionIntent');
+          // Redirect to landing page which will handle the subscription
+          navigate('/landing');
+        } else {
+          navigate("/");
+        }
       }
       if (event === 'SIGNED_OUT') {
         setError(null);
       }
-      // Handle auth errors through the state change event
       if (event === 'USER_UPDATED' && !session) {
         setError("Authentication failed. Please try again.");
       }

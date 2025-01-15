@@ -15,7 +15,14 @@ const Landing = () => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate('/');
+        // If user was trying to subscribe, continue with subscription
+        const subscriptionIntent = localStorage.getItem('subscriptionIntent');
+        if (subscriptionIntent) {
+          localStorage.removeItem('subscriptionIntent');
+          handleSubscribe();
+        } else {
+          navigate('/');
+        }
       }
     };
     
@@ -31,10 +38,11 @@ const Landing = () => {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
+        // Store subscription intent and redirect to login
+        localStorage.setItem('subscriptionIntent', 'true');
         toast({
           title: "Authentication required",
           description: "Please log in to subscribe",
-          variant: "destructive",
         });
         navigate('/login');
         return;
