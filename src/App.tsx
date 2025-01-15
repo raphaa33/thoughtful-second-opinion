@@ -9,8 +9,6 @@ import { OpinionsProvider } from "@/contexts/OpinionsContext"
 import Landing from "./pages/Landing"
 import Index from "./pages/Index"
 import PreviousOpinions from "./pages/PreviousOpinions"
-import AskFriend from "./pages/AskFriend"
-import PopularQuestions from "./pages/PopularQuestions"
 import SavedOpinions from "./pages/SavedOpinions"
 import Settings from "./pages/Settings"
 import Login from "./pages/Login"
@@ -78,22 +76,6 @@ const App = () => (
                 element={
                   <PrivateRoute>
                     <PreviousOpinions />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/ask-friend"
-                element={
-                  <PrivateRoute>
-                    <AskFriend />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/popular"
-                element={
-                  <PrivateRoute>
-                    <PopularQuestions />
                   </PrivateRoute>
                 }
               />
