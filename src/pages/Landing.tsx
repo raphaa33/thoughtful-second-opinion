@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { Rocket, CheckCircle, ArrowRight } from "lucide-react";
+import { Heart, Users, Globe } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -24,92 +24,83 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50/50">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-xl">WH</span>
             </div>
             <span className="text-xl font-semibold text-gray-900">We're Here to Help</span>
           </div>
           
-          <nav className="hidden md:flex gap-8 items-center">
-            <Button 
-              variant="ghost"
-              onClick={handleGetStarted}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Sign in
-            </Button>
-            <Button 
-              onClick={handleGetStarted}
-              className="bg-primary hover:bg-primary/90"
-            >
-              Get started
-            </Button>
-          </nav>
+          <Button 
+            onClick={handleGetStarted}
+            variant="ghost"
+            className="text-gray-600 hover:text-gray-900"
+          >
+            Sign in
+          </Button>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex min-h-screen items-center justify-center px-4">
-        <div className="w-full max-w-4xl mx-auto text-center pt-20">
-          {/* Hero Section */}
-          <div className="space-y-6 mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight max-w-3xl mx-auto">
-              Get trusted advice when you need it most
-            </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Share your thoughts and get personalized, unbiased opinions to help you make better decisions.
-            </p>
-          </div>
+      {/* Hero Section */}
+      <main className="pt-32 pb-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            Get Support When You Need It Most
+          </h1>
+          <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+            Share your thoughts and receive thoughtful, personalized guidance to help you make better decisions.
+          </p>
 
-          {/* Main CTA Form */}
-          <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-12">
-            <div className="flex gap-4">
+          {/* CTA Section */}
+          <div className="bg-white p-6 rounded-2xl shadow-lg mb-16 max-w-2xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-4">
               <Input 
                 placeholder="What's on your mind?" 
-                className="flex-1 text-lg h-12 border-gray-200"
+                className="flex-1 text-lg h-12"
               />
               <Button 
                 onClick={handleGetStarted}
-                className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium whitespace-nowrap flex items-center gap-2"
+                size="lg"
+                className="bg-primary hover:bg-primary/90 h-12"
               >
-                Get started for free
-                <ArrowRight className="h-5 w-5" />
+                Get Started
               </Button>
             </div>
           </div>
 
-          {/* Features */}
+          {/* Features Grid */}
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="flex flex-col items-center gap-4 p-6 bg-white/50 rounded-2xl">
-              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <Rocket className="h-6 w-6 text-primary" />
+            <div className="bg-white/50 p-8 rounded-2xl backdrop-blur-sm">
+              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold">Quick Responses</h3>
-              <p className="text-gray-600 text-center">
-                Get thoughtful answers to your questions within minutes
+              <h3 className="text-xl font-semibold mb-3">Caring Support</h3>
+              <p className="text-gray-600">
+                Receive compassionate guidance from our supportive community
               </p>
             </div>
-            <div className="flex flex-col items-center gap-4 p-6 bg-white/50 rounded-2xl">
-              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 text-primary" />
+
+            <div className="bg-white/50 p-8 rounded-2xl backdrop-blur-sm">
+              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold">Unbiased Advice</h3>
-              <p className="text-gray-600 text-center">
-                Receive balanced perspectives to help you make informed decisions
+              <h3 className="text-xl font-semibold mb-3">Expert Advice</h3>
+              <p className="text-gray-600">
+                Connect with experienced advisors who understand your needs
               </p>
             </div>
-            <div className="flex flex-col items-center gap-4 p-6 bg-white/50 rounded-2xl">
-              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 text-primary" />
+
+            <div className="bg-white/50 p-8 rounded-2xl backdrop-blur-sm">
+              <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Globe className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold">Private & Secure</h3>
-              <p className="text-gray-600 text-center">
-                Your conversations are always private and protected
+              <h3 className="text-xl font-semibold mb-3">Global Community</h3>
+              <p className="text-gray-600">
+                Join a worldwide network of supportive individuals
               </p>
             </div>
           </div>
