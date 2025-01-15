@@ -24,7 +24,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       {/* Minimal Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -61,11 +61,11 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center">
+      <main className="pt-32 pb-20">
         <div className="container mx-auto px-4">
           {/* Main Content */}
           <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-gray-900">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-gray-900 tracking-tight">
               Turn thoughts into
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent"> clarity</span>
             </h1>
