@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Crown } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -29,13 +29,13 @@ const Landing = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg"></div>
-            <span className="text-xl font-medium text-gray-900">thoughtful</span>
+            <Crown className="w-8 h-8 text-primary" />
+            <span className="text-xl font-medium text-gray-900">My Second Opinion</span>
           </div>
           <Button 
             onClick={handleGetStarted}
             variant="outline"
-            className="bg-white/80 backdrop-blur-sm border border-gray-200 text-gray-900 hover:bg-gray-50"
+            className="bg-white/80 backdrop-blur-sm border border-primary/20 text-primary hover:bg-primary/5"
           >
             Sign in
           </Button>
@@ -49,7 +49,7 @@ const Landing = () => {
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-gray-900 tracking-tight">
               Turn thoughts into
-              <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"> clarity</span>
+              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent"> clarity</span>
             </h1>
             
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -60,11 +60,11 @@ const Landing = () => {
             <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto pt-8">
               <Input 
                 placeholder="What's on your mind?" 
-                className="h-12 bg-gray-50 border-gray-200 focus:border-gray-300 focus:ring-gray-200 text-gray-900 placeholder:text-gray-500"
+                className="h-12 bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary/20 text-gray-900 placeholder:text-gray-500"
               />
               <Button 
                 onClick={handleGetStarted}
-                className="h-12 px-6 bg-gray-900 hover:bg-gray-800 text-white flex items-center gap-2"
+                className="h-12 px-6 bg-primary hover:bg-primary/90 text-white flex items-center gap-2"
               >
                 Get started
                 <ArrowRight className="w-4 h-4" />
@@ -77,9 +77,9 @@ const Landing = () => {
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="p-6 rounded-2xl bg-gradient-to-b from-gray-50 to-white border border-gray-100 backdrop-blur-sm"
+                className="p-6 rounded-2xl bg-gradient-to-b from-gray-50 to-white border border-primary/10 backdrop-blur-sm"
               >
-                <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-4">
                   <feature.icon className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -97,7 +97,7 @@ const Landing = () => {
       {/* Footer */}
       <footer className="border-t border-gray-100 py-12 bg-gray-50">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© 2024 thoughtful. All rights reserved.</p>
+          <p>© 2024 My Second Opinion. All rights reserved.</p>
         </div>
       </footer>
     </div>
