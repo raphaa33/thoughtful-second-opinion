@@ -46,7 +46,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-16 px-4">
+      <main className="container mx-auto pt-32 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Get Support When You Need It Most
