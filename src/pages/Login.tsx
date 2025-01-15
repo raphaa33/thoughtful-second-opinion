@@ -56,24 +56,14 @@ const Login = () => {
         setError(null);
       }
 
-      // Handle specific auth errors
-      if (event === 'USER_DELETED' || event === 'TOKEN_REFRESHED') {
+      // Reset error on specific auth events
+      if (['PASSWORD_RECOVERY', 'TOKEN_REFRESHED'].includes(event)) {
         setError(null);
       }
     });
 
-    // Set up error handling for sign-in attempts
-    const handleAuthError = (err: AuthError) => {
-      console.error('Auth error:', err);
-      setError(getErrorMessage(err));
-    };
-
-    // Subscribe to auth errors
-    const { data: { subscription: errorSubscription } } = supabase.auth.onError(handleAuthError);
-
     return () => {
       subscription.unsubscribe();
-      errorSubscription?.unsubscribe();
     };
   }, [navigate, toast]);
 
