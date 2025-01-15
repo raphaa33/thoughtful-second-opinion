@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,48 +13,24 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate("/", { replace: true });
-      }
-    };
-    checkSession();
-
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('Auth state changed:', event, session);
-      
-      if (event === 'SIGNED_IN' && session) {
+      if (event === 'SIGNED_IN') {
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate("/", { replace: true });
+        navigate("/");
       }
-      
       if (event === 'SIGNED_OUT') {
         setError(null);
       }
-
-      // Handle specific error cases
       if (event === 'USER_UPDATED' && !session) {
-        const errorData = JSON.parse(localStorage.getItem('supabase.auth.error') || '{}');
-        if (errorData.code === 'weak_password') {
-          setError("Password should be at least 6 characters long.");
-        } else if (errorData.code === 'validation_failed') {
-          setError("Please enter both email and password.");
-        } else if (errorData.code === 'invalid_credentials') {
-          setError("Invalid login credentials. Please check your email and password.");
-        } else {
-          setError("Authentication failed. Please try again.");
-        }
+        setError("Authentication failed. Please try again.");
       }
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, [navigate, toast]);
 
   return (
@@ -76,8 +52,6 @@ const Login = () => {
               style: {
                 button: { background: 'rgb(59 130 246)', color: 'white' },
                 anchor: { color: 'rgb(59 130 246)' },
-                input: { background: 'white' },
-                message: { color: 'rgb(239 68 68)' },
               }
             }}
             theme="light"

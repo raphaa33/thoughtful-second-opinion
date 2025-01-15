@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Brain, MessageCircle, Shield, Sparkles } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -24,172 +24,119 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Minimal Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <svg
-              viewBox="0 0 24 24"
-              className="w-8 h-8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                fill="currentColor"
-                className="text-primary"
-              />
-              <circle
-                cx="12"
-                cy="12"
-                r="4"
-                fill="white"
-                className="text-white"
-              />
-            </svg>
-            <span className="text-xl font-medium text-gray-900">My Second Opinion</span>
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/50 to-background">
+      {/* Header */}
+      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-primary rounded-lg grid place-items-center">
+            <Brain className="w-5 h-5 text-primary-foreground" />
           </div>
-          <Button 
-            onClick={handleGetStarted}
-            variant="outline"
-            className="bg-white/80 backdrop-blur-sm border border-primary/20 text-primary hover:bg-primary/5"
-          >
-            Sign in
-          </Button>
+          <span className="text-xl font-semibold">My Second Opinion</span>
         </div>
+        <nav className="hidden md:flex gap-8 items-center">
+          <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Features</a>
+          <a href="#how-it-works" className="text-foreground/80 hover:text-foreground transition-colors">How it works</a>
+          <Button onClick={handleGetStarted} variant="outline">
+            Get started
+          </Button>
+        </nav>
       </header>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20">
-        <div className="container mx-auto px-4">
-          {/* Main Content */}
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-gray-900 tracking-tight">
-              Turn thoughts into
-              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent"> clarity</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Get thoughtful second opinions on your important decisions, powered by advanced AI and human wisdom.
-            </p>
-
-            {/* CTA Section */}
-            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto pt-8">
-              <Input 
-                placeholder="What's on your mind?" 
-                className="h-12 bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary/20 text-gray-900 placeholder:text-gray-500"
-              />
-              <Button 
-                onClick={handleGetStarted}
-                className="h-12 px-6 bg-primary hover:bg-primary/90 text-white flex items-center gap-2"
-              >
-                Get started
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-32">
-            {features.map((feature, index) => (
-              <div 
-                key={index}
-                className="p-6 rounded-2xl bg-gradient-to-b from-gray-50 to-white border border-primary/10 backdrop-blur-sm"
-              >
-                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-4">
-                  <feature.icon className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
+      <section className="container mx-auto px-4 py-24 md:py-32">
+        <div className="max-w-[85rem] mx-auto">
+          <div className="grid lg:grid-cols-7 lg:gap-x-8 xl:gap-x-12 lg:items-center">
+            <div className="lg:col-span-3">
+              <h1 className="block text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+                Get trusted Advice when you need it most
+              </h1>
+              <p className="mt-6 text-lg text-muted-foreground">
+                Get personalized, unbiased second opinions on your important decisions using advanced AI technology that considers multiple perspectives.
+              </p>
+              <div className="mt-8 grid gap-3 w-full sm:inline-flex">
+                <Button onClick={handleGetStarted} size="lg" className="gap-2">
+                  Start for free <ArrowRight className="w-4 h-4" />
+                </Button>
               </div>
-            ))}
-          </div>
 
-          {/* Pricing Section */}
-          <div className="mt-32 text-center max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h2>
-            <p className="text-lg text-gray-600 mb-12">Get full access to all features</p>
-            
-            <div className="flex justify-center">
-              <div className="max-w-md w-full">
-                <div className="rounded-2xl border border-primary p-8 bg-white shadow-md">
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">Full Access</h3>
-                  <p className="text-gray-600 mb-6">Everything you need</p>
-                  <div className="text-4xl font-bold text-gray-900 mb-6">$5<span className="text-lg font-normal text-gray-600">/month</span></div>
-                  <ul className="space-y-4 mb-8 text-left">
-                    <li className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-primary" />
-                      <span>Unlimited AI opinions</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-primary" />
-                      <span>Advanced customization</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-primary" />
-                      <span>Unlimited saved opinions</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-primary" />
-                      <span>Priority support</span>
-                    </li>
-                  </ul>
-                  <Button 
-                    onClick={handleGetStarted}
-                    className="w-full"
+              {/* Trust Indicators */}
+              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:gap-x-8">
+                <div className="flex items-center gap-x-2">
+                  <Shield className="w-5 h-5 text-primary" />
+                  <span className="text-sm text-muted-foreground">Secure & Private</span>
+                </div>
+                <div className="flex items-center gap-x-2">
+                  <MessageCircle className="w-5 h-5 text-primary" />
+                  <span className="text-sm text-muted-foreground">24/7 Available</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Features Grid */}
+            <div className="lg:col-span-4 mt-10 lg:mt-0">
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    title: "AI-Powered Analysis",
+                    description: "Advanced algorithms analyze your situation from multiple angles",
+                    icon: Brain
+                  },
+                  {
+                    title: "Instant Insights",
+                    description: "Get thoughtful responses within seconds",
+                    icon: Sparkles
+                  },
+                  {
+                    title: "Unbiased Perspective",
+                    description: "Objective analysis free from emotional attachment",
+                    icon: Shield
+                  },
+                  {
+                    title: "Personalized Advice",
+                    description: "Tailored recommendations based on your context",
+                    icon: MessageCircle
+                  }
+                ].map((feature, index) => (
+                  <div
+                    key={index}
+                    className="group relative bg-background/50 border rounded-xl p-5 hover:border-primary transition-colors"
                   >
-                    Get Started
-                  </Button>
-                </div>
+                    <div className="flex items-center gap-x-4">
+                      <feature.icon className="w-6 h-6 text-primary" />
+                      <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+                    </div>
+                    <p className="mt-3 text-muted-foreground">{feature.description}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </section>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-100 py-12 bg-gray-50">
-        <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© 2024 My Second Opinion. All rights reserved.</p>
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-6">
+            Ready to make better decisions?
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Input 
+              placeholder="What's on your mind?" 
+              className="max-w-sm text-base"
+            />
+            <Button 
+              onClick={handleGetStarted}
+              size="lg"
+              className="gap-2"
+            >
+              Get started <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 };
-
-const features = [
-  {
-    title: "AI-Powered Insights",
-    description: "Get intelligent, nuanced perspectives on your decisions using advanced AI technology.",
-    icon: ({ className }: { className?: string }) => (
-      <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    )
-  },
-  {
-    title: "Human Wisdom",
-    description: "Combine AI insights with human experience for more balanced decision-making.",
-    icon: ({ className }: { className?: string }) => (
-      <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-      </svg>
-    )
-  },
-  {
-    title: "Privacy First",
-    description: "Your thoughts and decisions are protected with enterprise-grade security.",
-    icon: ({ className }: { className?: string }) => (
-      <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      </svg>
-    )
-  }
-];
 
 export default Landing;

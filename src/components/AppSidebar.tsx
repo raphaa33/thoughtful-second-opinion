@@ -1,4 +1,4 @@
-import { MessageSquare, Bookmark, Settings, User, History } from "lucide-react"
+import { MessageSquare, Bookmark, Settings, User, Users, List, History } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 import {
   Sidebar,
@@ -10,7 +10,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
-  SidebarHeader,
 } from "@/components/ui/sidebar"
 
 const menuItems = [
@@ -23,6 +22,16 @@ const menuItems = [
     title: "Previous Opinions",
     icon: History,
     url: "/previous-opinions",
+  },
+  {
+    title: "Ask a Friend",
+    icon: Users,
+    url: "/ask-friend",
+  },
+  {
+    title: "Popular Questions",
+    icon: List,
+    url: "/popular",
   },
   {
     title: "Saved Opinions",
@@ -41,17 +50,6 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="border-b border-border/10">
-        <div className="flex items-center gap-2 px-4 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <MessageSquare className="h-4 w-4 text-primary-foreground" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold">My Second Opinion</span>
-            <span className="text-xs text-muted-foreground">AI Assistant</span>
-          </div>
-        </div>
-      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Menu</SidebarGroupLabel>
