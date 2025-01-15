@@ -25,12 +25,12 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-3.5-turbo', // Using a more stable model
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: question }
         ],
-        max_tokens: 300, // Limit response length to reduce costs
+        max_tokens: 250, // Reduced token limit for cost efficiency
         temperature: 0.7,
       }),
     });
@@ -40,14 +40,12 @@ serve(async (req) => {
     
     if (!response.ok) {
       console.error('OpenAI API error:', data.error);
-      let errorMessage = 'Failed to generate opinion';
-      
-      // Handle specific OpenAI errors
-      if (data.error?.message?.includes('quota')) {
-        errorMessage = 'Service is temporarily unavailable. Please try again later.';
-      }
-      
-      throw new Error(errorMessage);
+      throw new Error(data.error?.message || 'Failed to generate opinion');
+    }
+
+    if (!data.choices?.[0]?.message?.content) {
+      console.error('Unexpected OpenAI API response format:', data);
+      throw new Error('Invalid response from OpenAI');
     }
 
     const generatedText = data.choices[0].message.content;
@@ -58,9 +56,13 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Error in generate-opinion function:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message || 'An unexpected error occurred'
-    }), {
+    
+    // Determine if it's an OpenAI API error
+    const errorMessage = error.message?.includes('API') 
+      ? 'OpenAI service is temporarily unavailable. Please try again later.'
+      : error.message || 'An unexpected error occurred';
+
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
