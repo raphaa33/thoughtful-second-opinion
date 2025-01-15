@@ -13,6 +13,7 @@ import PopularQuestions from "./pages/PopularQuestions"
 import SavedOpinions from "./pages/SavedOpinions"
 import Settings from "./pages/Settings"
 import Login from "./pages/Login"
+import Account from "./pages/Account"
 import { useEffect, useState } from "react"
 import { supabase } from "./integrations/supabase/client"
 
@@ -107,6 +108,14 @@ const App = () => (
                 element={
                   <PrivateRoute>
                     <Settings />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/account"
+                element={
+                  <PrivateRoute>
+                    <Account />
                   </PrivateRoute>
                 }
               />
