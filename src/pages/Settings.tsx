@@ -8,17 +8,19 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+type Theme = "light" | "dark";
+
 const Settings = () => {
   const [hideSaveButton, setHideSaveButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<Theme>("light");
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
     loadUserPreferences();
     // Initialize theme from localStorage or system preference
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
     setTheme(savedTheme);
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
@@ -94,12 +96,11 @@ const Settings = () => {
   };
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
+    const newTheme: Theme = theme === "light" ? "dark" : "light";
     // Update localStorage
     localStorage.setItem("theme", newTheme);
     // Update DOM
-    document.documentElement.classList.remove(theme);
-    document.documentElement.classList.add(newTheme);
+    document.documentElement.classList.toggle("dark");
     // Update state
     setTheme(newTheme);
     toast({
