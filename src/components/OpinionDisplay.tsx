@@ -8,18 +8,32 @@ interface OpinionDisplayProps {
 
 export const OpinionDisplay = ({ opinion, isLoading }: OpinionDisplayProps) => {
   const renderOpinionText = (text: string) => {
-    // Split the text by bold markers (**) and map through the parts
-    return text.split(/(\*\*.*?\*\*)/).map((part, index) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        // Remove the ** markers and wrap the content in a bold span
-        return (
-          <span key={index} className="font-bold">
-            {part.slice(2, -2)}
-          </span>
-        );
-      }
-      return <span key={index}>{part}</span>;
+    // First split the text into sections by double line breaks
+    const sections = text.split('\n\n').map((section, sectionIndex) => {
+      // For each section, handle bold text
+      const processedSection = section.split(/(\*\*.*?\*\*)/).map((part, index) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <span key={`bold-${index}`} className="font-bold">
+              {part.slice(2, -2)}
+            </span>
+          );
+        }
+        return <span key={`text-${index}`}>{part}</span>;
+      });
+
+      // Return each section with appropriate spacing
+      return (
+        <div 
+          key={`section-${sectionIndex}`} 
+          className={`${sectionIndex > 0 ? 'mt-6' : ''}`}
+        >
+          {processedSection}
+        </div>
+      );
     });
+
+    return sections;
   };
 
   return (
@@ -33,9 +47,9 @@ export const OpinionDisplay = ({ opinion, isLoading }: OpinionDisplayProps) => {
             <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
           </div>
         ) : opinion ? (
-          <p className="text-lg leading-relaxed">
+          <div className="text-lg leading-relaxed space-y-4">
             {renderOpinionText(opinion)}
-          </p>
+          </div>
         ) : (
           <p className="text-muted-foreground text-center py-8">
             Your second opinion will appear here
