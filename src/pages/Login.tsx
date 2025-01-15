@@ -18,15 +18,19 @@ const Login = () => {
     console.log("Auth error:", error);
     
     if (error instanceof AuthApiError) {
-      switch (error.status) {
-        case 400:
+      // Handle specific Supabase error codes
+      switch (error.message) {
+        case "Invalid login credentials":
           return "Invalid email or password. Please check your credentials and try again.";
-        case 401:
+        case "Email not confirmed":
           return "Please verify your email address before signing in.";
-        case 404:
+        case "User not found":
           return "No user found with these credentials.";
         default:
-          return `Authentication error: ${error.message}`;
+          if (error.message) {
+            return `Authentication error: ${error.message}`;
+          }
+          return "An unexpected authentication error occurred. Please try again.";
       }
     }
     return `Unexpected error: ${error.message}`;
@@ -51,10 +55,25 @@ const Login = () => {
         console.log('User signed out');
         setError(null);
       }
+
+      // Handle specific auth errors
+      if (event === 'USER_DELETED' || event === 'TOKEN_REFRESHED') {
+        setError(null);
+      }
     });
+
+    // Set up error handling for sign-in attempts
+    const handleAuthError = (err: AuthError) => {
+      console.error('Auth error:', err);
+      setError(getErrorMessage(err));
+    };
+
+    // Subscribe to auth errors
+    const { data: { subscription: errorSubscription } } = supabase.auth.onError(handleAuthError);
 
     return () => {
       subscription.unsubscribe();
+      errorSubscription?.unsubscribe();
     };
   }, [navigate, toast]);
 
