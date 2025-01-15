@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { Brain, MessageCircle, Shield, Sparkles } from "lucide-react";
+import { ArrowDown, CheckCircle, Menu } from "lucide-react";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -24,141 +24,95 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/50 to-background">
+    <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg grid place-items-center">
-            <Brain className="w-5 h-5 text-primary-foreground" />
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+              <span className="text-white font-bold text-xl">SO</span>
+            </div>
+            <span className="text-xl font-semibold text-gray-900">My Second Opinion</span>
           </div>
-          <span className="text-xl font-semibold">My Second Opinion</span>
+          
+          {/* Mobile Menu Button */}
+          <button className="md:hidden p-2">
+            <Menu className="h-6 w-6 text-gray-600" />
+          </button>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-8 items-center">
+            <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 transition-colors">How it works</a>
+            <a href="#our-mission" className="text-gray-600 hover:text-gray-900 transition-colors">Our mission</a>
+            <a href="#faq" className="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a>
+            <Button 
+              onClick={handleGetStarted} 
+              className="bg-primary hover:bg-primary/90 text-white font-medium"
+            >
+              Get started
+            </Button>
+          </nav>
         </div>
-        <nav className="hidden md:flex gap-8 items-center">
-          <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Features</a>
-          <a href="#how-it-works" className="text-foreground/80 hover:text-foreground transition-colors">How it works</a>
-          <Button 
-            onClick={handleGetStarted} 
-            variant="outline"
-            className="rounded-full border-primary/20 hover:bg-primary/5"
-          >
-            Get started
-          </Button>
-        </nav>
       </header>
 
-      {/* Trusted Second Opinion Banner */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl p-8 backdrop-blur-sm border border-primary/10">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              YOUR TRUSTED
-            </h2>
-            <h2 className="text-4xl md:text-5xl font-bold mt-2 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              SECOND OPINION
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary/50 mx-auto mt-6 rounded-full" />
-          </div>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20">
-        <div className="max-w-[85rem] mx-auto">
-          <div className="grid lg:grid-cols-7 lg:gap-x-8 xl:gap-x-12 lg:items-center">
-            <div className="lg:col-span-3 mx-auto text-center lg:text-left max-w-2xl">
-              <h1 className="block text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl max-w-xl mx-auto lg:mx-0">
-                Get trusted Advice when you need it most
-              </h1>
-              <p className="mt-6 text-lg text-muted-foreground">
-                Get personalized, unbiased second opinions on your important decisions using advanced AI technology that considers multiple perspectives.
-              </p>
-              <div className="mt-8 grid gap-3 w-full sm:inline-flex">
+      <main className="pt-24 pb-20 px-4 md:pt-32 md:pb-32">
+        <div className="container mx-auto max-w-7xl flex justify-center">
+          <div className="flex flex-col items-center justify-center w-full max-w-3xl text-center">
+            <div className="animate-fade-in-up">
+              <h2 className="inline-block text-primary font-medium mb-6 tracking-wide uppercase text-sm md:text-base bg-primary/10 px-4 py-2 rounded-full">
+                Your Trusted Second Opinion
+              </h2>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight">
+              Get trusted advice when you need it most.
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Get personalized, unbiased opinions on your important decisions and dilemmas.
+            </p>
+
+            {/* Features */}
+            <div className="flex flex-col gap-6 items-center justify-center mb-12">
+              <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full">
+                <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
+                <span className="text-gray-700">AI-Powered Analysis</span>
+              </div>
+              <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full">
+                <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
+                <span className="text-gray-700">Unbiased Perspectives</span>
+              </div>
+              <div className="flex items-center gap-3 bg-white/50 px-6 py-3 rounded-full">
+                <CheckCircle className="text-primary h-5 w-5 flex-shrink-0" />
+                <span className="text-gray-700">Quick & Thoughtful Responses</span>
+              </div>
+            </div>
+
+            {/* Get Started Form */}
+            <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+              <div className="flex flex-col md:flex-row gap-4">
+                <Input 
+                  placeholder="What's on your mind?" 
+                  className="flex-1 text-lg h-12 border-gray-200"
+                />
                 <Button 
-                  onClick={handleGetStarted} 
-                  size="lg" 
-                  className="rounded-full text-lg font-medium bg-primary hover:bg-primary/90 text-white px-8"
+                  onClick={handleGetStarted}
+                  className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-medium"
                 >
                   Get started for free
                 </Button>
               </div>
-
-              {/* Trust Indicators */}
-              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:gap-x-8 justify-center lg:justify-start">
-                <div className="flex items-center gap-x-2">
-                  <Shield className="w-5 h-5 text-primary" />
-                  <span className="text-sm text-muted-foreground">Secure & Private</span>
-                </div>
-                <div className="flex items-center gap-x-2">
-                  <MessageCircle className="w-5 h-5 text-primary" />
-                  <span className="text-sm text-muted-foreground">24/7 Available</span>
-                </div>
-              </div>
             </div>
-
-            {/* Features Grid */}
-            <div className="lg:col-span-4 mt-10 lg:mt-0">
-              <div className="grid sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    title: "AI-Powered Analysis",
-                    description: "Advanced algorithms analyze your situation from multiple angles",
-                    icon: Brain
-                  },
-                  {
-                    title: "Instant Insights",
-                    description: "Get thoughtful responses within seconds",
-                    icon: Sparkles
-                  },
-                  {
-                    title: "Unbiased Perspective",
-                    description: "Objective analysis free from emotional attachment",
-                    icon: Shield
-                  },
-                  {
-                    title: "Personalized Advice",
-                    description: "Tailored recommendations based on your context",
-                    icon: MessageCircle
-                  }
-                ].map((feature, index) => (
-                  <div
-                    key={index}
-                    className="group relative bg-background/50 border rounded-xl p-5 hover:border-primary transition-colors"
-                  >
-                    <div className="flex items-center gap-x-4">
-                      <feature.icon className="w-6 h-6 text-primary" />
-                      <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
-                    </div>
-                    <p className="mt-3 text-muted-foreground">{feature.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-6">
-            Ready to make better decisions?
-          </h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Input 
-              placeholder="What's on your mind?" 
-              className="max-w-sm text-base rounded-full"
-            />
-            <Button 
-              onClick={handleGetStarted}
-              size="lg"
-              className="rounded-full text-lg font-medium bg-primary hover:bg-primary/90 text-white px-8"
-            >
-              Get started for free
-            </Button>
-          </div>
+        {/* How it Works Section Indicator */}
+        <div className="mt-32 flex flex-col items-center gap-4">
+          <ArrowDown className="h-8 w-8 text-primary animate-bounce" />
+          <h3 className="text-primary font-medium tracking-wide uppercase text-sm">
+            How it Works
+          </h3>
         </div>
-      </section>
+      </main>
     </div>
   );
 };
