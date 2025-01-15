@@ -24,7 +24,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Minimal Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -61,7 +61,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20">
+      <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-20">
         <div className="container mx-auto px-4">
           {/* Main Content */}
           <div className="max-w-3xl mx-auto text-center space-y-8">
