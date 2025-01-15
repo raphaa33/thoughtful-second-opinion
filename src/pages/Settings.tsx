@@ -5,24 +5,17 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-type Theme = "light" | "dark";
 
 const Settings = () => {
   const [hideSaveButton, setHideSaveButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [theme, setTheme] = useState<Theme>("light");
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
     loadUserPreferences();
-    // Initialize theme from localStorage or system preference
-    const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
-    setTheme(savedTheme);
-    document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
   const loadUserPreferences = async () => {
@@ -95,20 +88,6 @@ const Settings = () => {
     }
   };
 
-  const toggleTheme = () => {
-    const newTheme: Theme = theme === "light" ? "dark" : "light";
-    // Update localStorage
-    localStorage.setItem("theme", newTheme);
-    // Update DOM
-    document.documentElement.classList.toggle("dark");
-    // Update state
-    setTheme(newTheme);
-    toast({
-      title: "Theme Updated",
-      description: `Switched to ${newTheme} mode`,
-    });
-  };
-
   const handleSignOut = async () => {
     try {
       const { error } = await supabase.auth.signOut();
@@ -163,23 +142,6 @@ const Settings = () => {
               checked={hideSaveButton}
               onCheckedChange={updateHideSaveButton}
             />
-          </div>
-
-          <div className="flex items-center justify-between space-x-4">
-            <div className="space-y-1">
-              <Label htmlFor="theme-toggle">Theme</Label>
-              <p className="text-sm text-muted-foreground">
-                Toggle between light and dark mode
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={toggleTheme}
-              className="h-10 w-10"
-            >
-              {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-            </Button>
           </div>
 
           <div className="pt-6 border-t">
