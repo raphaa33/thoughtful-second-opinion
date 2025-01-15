@@ -55,6 +55,7 @@ const Landing = () => {
       if (error) throw error;
       if (!data.url) throw new Error('No checkout URL returned');
 
+      // Redirect to Stripe checkout
       window.location.href = data.url;
     } catch (error) {
       console.error('Error creating checkout session:', error);
