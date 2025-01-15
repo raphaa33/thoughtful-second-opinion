@@ -46,8 +46,8 @@ const Landing = () => {
       <section className="container mx-auto px-4 py-24 md:py-32">
         <div className="max-w-[85rem] mx-auto">
           <div className="grid lg:grid-cols-7 lg:gap-x-8 xl:gap-x-12 lg:items-center">
-            <div className="lg:col-span-3">
-              <h1 className="block text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+            <div className="lg:col-span-3 mx-auto text-center lg:text-left max-w-2xl">
+              <h1 className="block text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl max-w-xl mx-auto lg:mx-0">
                 Get trusted Advice when you need it most
               </h1>
               <p className="mt-6 text-lg text-muted-foreground">
@@ -60,7 +60,7 @@ const Landing = () => {
               </div>
 
               {/* Trust Indicators */}
-              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:gap-x-8">
+              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:gap-x-8 justify-center lg:justify-start">
                 <div className="flex items-center gap-x-2">
                   <Shield className="w-5 h-5 text-primary" />
                   <span className="text-sm text-muted-foreground">Secure & Private</span>
