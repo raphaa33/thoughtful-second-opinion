@@ -61,7 +61,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-20">
+      <main className="flex-1 flex items-center justify-center">
         <div className="container mx-auto px-4">
           {/* Main Content */}
           <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -75,7 +75,7 @@ const Landing = () => {
             </p>
 
             {/* CTA Section */}
-            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto pt-8">
+            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
               <Input 
                 placeholder="What's on your mind?" 
                 className="h-12 bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary/20 text-gray-900 placeholder:text-gray-500"
