@@ -47,12 +47,18 @@ const Landing = () => {
       </header>
 
       {/* Trusted Second Opinion Banner */}
-      <div className="container mx-auto px-4 py-8">
-        <img 
-          src="/lovable-uploads/67c9fe1d-0904-4c8d-ae9a-e60dad044e37.png" 
-          alt="Your Trusted Second Opinion" 
-          className="max-w-3xl mx-auto w-full"
-        />
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl p-8 backdrop-blur-sm border border-primary/10">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              YOUR TRUSTED
+            </h2>
+            <h2 className="text-4xl md:text-5xl font-bold mt-2 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              SECOND OPINION
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary/50 mx-auto mt-6 rounded-full" />
+          </div>
+        </div>
       </div>
 
       {/* Hero Section */}
