@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Crown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Landing = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Crown className="w-8 h-8 text-primary" />
+            <Logo className="w-8 h-8 text-primary" />
             <span className="text-xl font-medium text-gray-900">My Second Opinion</span>
           </div>
           <Button 
