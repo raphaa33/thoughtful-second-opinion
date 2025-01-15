@@ -26,7 +26,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
+      <header className="container mx-auto px-4 py-6 flex justify-between items-center max-w-7xl">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg"></div>
           <span className="text-xl font-semibold">My Second Opinion</span>
@@ -42,7 +42,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 text-center mt-20 mb-32">
+      <main className="container mx-auto px-4 text-center mt-20 mb-32 max-w-7xl">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-primary font-medium mb-6 tracking-wide">
             YOUR TRUSTED SECOND OPINION
