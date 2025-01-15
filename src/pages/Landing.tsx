@@ -111,39 +111,41 @@ const Landing = () => {
           </div>
 
           {/* Pricing Section */}
-          <div className="mt-32 text-center">
+          <div className="mt-32 text-center max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h2>
             <p className="text-lg text-gray-600 mb-12">Get full access to all features</p>
             
-            <div className="max-w-md mx-auto">
-              <div className="rounded-2xl border border-primary p-8 bg-white shadow-md">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">Full Access</h3>
-                <p className="text-gray-600 mb-6">Everything you need</p>
-                <div className="text-4xl font-bold text-gray-900 mb-6">$5<span className="text-lg font-normal text-gray-600">/month</span></div>
-                <ul className="space-y-4 mb-8 text-left">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-5 h-5 text-primary" />
-                    <span>Unlimited AI opinions</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-5 h-5 text-primary" />
-                    <span>Advanced customization</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-5 h-5 text-primary" />
-                    <span>Unlimited saved opinions</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-5 h-5 text-primary" />
-                    <span>Priority support</span>
-                  </li>
-                </ul>
-                <Button 
-                  onClick={handleGetStarted}
-                  className="w-full"
-                >
-                  Get Started
-                </Button>
+            <div className="flex justify-center">
+              <div className="max-w-md w-full">
+                <div className="rounded-2xl border border-primary p-8 bg-white shadow-md">
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">Full Access</h3>
+                  <p className="text-gray-600 mb-6">Everything you need</p>
+                  <div className="text-4xl font-bold text-gray-900 mb-6">$5<span className="text-lg font-normal text-gray-600">/month</span></div>
+                  <ul className="space-y-4 mb-8 text-left">
+                    <li className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-primary" />
+                      <span>Unlimited AI opinions</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-primary" />
+                      <span>Advanced customization</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-primary" />
+                      <span>Unlimited saved opinions</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-primary" />
+                      <span>Priority support</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    onClick={handleGetStarted}
+                    className="w-full"
+                  >
+                    Get Started
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
