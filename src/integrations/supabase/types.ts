@@ -9,6 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      alumni: {
+        Row: {
+          bio: string | null
+          created_at: string | null
+          current_company: string | null
+          current_position: string | null
+          email: string | null
+          first_name: string
+          graduation_year: number
+          id: string
+          industry: string | null
+          last_name: string
+          linkedin_url: string | null
+          location: string | null
+          program: string
+          specialization: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string | null
+          current_company?: string | null
+          current_position?: string | null
+          email?: string | null
+          first_name: string
+          graduation_year: number
+          id?: string
+          industry?: string | null
+          last_name: string
+          linkedin_url?: string | null
+          location?: string | null
+          program: string
+          specialization?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string | null
+          current_company?: string | null
+          current_position?: string | null
+          email?: string | null
+          first_name?: string
+          graduation_year?: number
+          id?: string
+          industry?: string | null
+          last_name?: string
+          linkedin_url?: string | null
+          location?: string | null
+          program?: string
+          specialization?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           content: string | null
