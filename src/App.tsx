@@ -20,37 +20,14 @@ import { supabase } from "./integrations/supabase/client"
 
 const queryClient = new QueryClient()
 
-const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session);
-    };
-    
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  if (isAuthenticated === null) {
-    return null;
-  }
-
-  return isAuthenticated ? (
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+  return (
     <div className="flex min-h-screen w-full bg-gray-50">
       <AppSidebar />
       <SidebarInset>
         {children}
       </SidebarInset>
     </div>
-  ) : (
-    <Navigate to="/landing" replace />
   );
 };
 
@@ -63,65 +40,65 @@ const App = () => (
         <BrowserRouter>
           <SidebarProvider>
             <Routes>
-              <Route path="/landing" element={<Landing />} />
+              <Route path="/landing" element={<Navigate to="/" replace />} />
               <Route path="/login" element={<Login />} />
               <Route
                 path="/"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <Index />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
               <Route
                 path="/previous-opinions"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <PreviousOpinions />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
               <Route
                 path="/ask-friend"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <AskFriend />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
               <Route
                 path="/popular"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <PopularQuestions />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
               <Route
                 path="/saved"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <SavedOpinions />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
               <Route
                 path="/settings"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <Settings />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
               <Route
                 path="/account"
                 element={
-                  <PrivateRoute>
+                  <PublicRoute>
                     <Account />
-                  </PrivateRoute>
+                  </PublicRoute>
                 }
               />
-              <Route path="*" element={<Navigate to="/landing" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </SidebarProvider>
         </BrowserRouter>
